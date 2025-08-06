@@ -631,7 +631,7 @@
         document.addEventListener('click', function(event) {
             const dropdown = document.getElementById('userDropdown');
             const userIcon = document.querySelector('.user-dropdown');
-            
+
             if (dropdown && !userIcon.contains(event.target)) {
                 dropdown.classList.remove('show');
             }

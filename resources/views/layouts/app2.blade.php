@@ -174,14 +174,16 @@
         }
 
         .nav-icon {
-            color: black; /* Changed from white to black */
+            color: black;
             font-size: 1.2rem;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             padding: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
+            border-radius: 50%;
         }
 
         .navbar.scrolled .nav-icon {
@@ -190,13 +192,32 @@
 
         .nav-icon:hover {
             color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            transform: scale(1.1);
         }
 
         .cart-icon {
             position: relative;
         }
 
-        /* Footer Styles */
+        /* Cart badge for item count */
+        .cart-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #ff6b6b;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 50%;
+            min-width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
         /* Footer Styles */
         .footer {
             background: #000;
@@ -209,7 +230,6 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 25px 20px;
-            /* Reduced from 40px */
             position: relative;
         }
 
@@ -217,7 +237,6 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
-            /* Reduced from 60px */
             align-items: start;
         }
 
@@ -226,7 +245,6 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            /* Reduced from 30px */
         }
 
         .footer-logo {
@@ -235,13 +253,10 @@
             margin-left: -8px;
             gap: 10px;
             margin-bottom: 1px;
-            /* Reduced from 20px */
         }
-
 
         .footer-logo h2 {
             font-size: 1.6rem;
-            /* Reduced from 1.8rem */
             font-weight: 700;
             color: white;
             letter-spacing: 2px;
@@ -249,10 +264,8 @@
 
         .footer-social-section h4 {
             font-size: 0.85rem;
-            /* Reduced from 0.9rem */
             font-weight: 600;
             margin-bottom: 12px;
-            /* Reduced from 15px */
             color: rgba(255, 255, 255, 0.8);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -261,7 +274,6 @@
         .footer-social {
             display: flex;
             gap: 10px;
-            /* Reduced from 12px */
             flex-wrap: wrap;
         }
 
@@ -270,15 +282,12 @@
             align-items: center;
             justify-content: center;
             width: 36px;
-            /* Reduced from 40px */
             height: 36px;
-            /* Reduced from 40px */
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             color: white;
             font-size: 1rem;
-            /* Reduced from 1.1rem */
             transition: all 0.3s ease;
             text-decoration: none;
         }
@@ -293,19 +302,16 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            /* Reduced from 10px */
             max-width: 200px;
         }
 
         .auth-btn {
             padding: 10px 20px;
-            /* Reduced from 12px 24px */
             border: 2px solid white;
             border-radius: 25px;
             background: transparent;
             color: white;
             font-size: 0.85rem;
-            /* Reduced from 0.9rem */
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -340,7 +346,6 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            /* Reduced from 20px */
             align-items: flex-end;
             text-align: right;
         }
@@ -350,30 +355,25 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            /* Reduced from 30px */
         }
 
         .footer-links li a {
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             font-size: 0.95rem;
-            /* Reduced from 1rem */
             font-weight: 500;
             transition: all 0.3s ease;
             padding: 6px 0;
-            /* Reduced from 8px */
             border-bottom: 1px solid transparent;
         }
 
-        .copy{
+        .copy {
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             font-size: 0.95rem;
-            /* Reduced from 1rem */
             font-weight: 500;
             transition: all 0.3s ease;
             padding: 6px 0;
-            /* Reduced from 8px */
             border-bottom: 1px solid transparent;
         }
 
@@ -385,16 +385,13 @@
         /* Footer Bottom */
         .footer-bottom {
             margin-top: 25px;
-            /* Reduced from 40px */
             padding-top: 15px;
-            /* Reduced from 20px */
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             text-align: right;
         }
 
         .footer-copyright {
             font-size: 0.8rem;
-            /* Reduced from 0.85rem */
             color: rgba(255, 255, 255, 0.6);
             font-weight: 400;
         }
@@ -404,7 +401,6 @@
             .footer-main {
                 grid-template-columns: 1fr;
                 gap: 30px;
-                /* Reduced from 40px */
                 text-align: center;
             }
 
@@ -430,28 +426,21 @@
         @media (max-width: 480px) {
             .footer-content {
                 padding: 20px 15px;
-                /* Reduced from 30px */
             }
 
             .footer-logo h2 {
                 font-size: 1.4rem;
-                /* Reduced from 1.5rem */
             }
 
             .social-icon {
                 width: 32px;
-                /* Reduced from 35px */
                 height: 32px;
-                /* Reduced from 35px */
                 font-size: 0.9rem;
-                /* Reduced from 1rem */
             }
 
             .auth-btn {
                 padding: 8px 18px;
-                /* Reduced from 10px 20px */
                 font-size: 0.8rem;
-                /* Reduced from 0.85rem */
             }
         }
 
@@ -514,10 +503,10 @@
     <nav class="navbar" id="navbar">
         <div class="nav-content">
             <ul class="nav-menu">
-                <li><a class="nav-link" href="{{ url('/') }}">Home</a></li>
-                <li><a class="nav-link" href="{{ url('/allProduct') }}">Products</a></li>
-                <li><a class="nav-link" href="{{ url('/about') }}">About</a></li>
-                <li><a class="nav-link" href="{{ url('/contact') }}">Contact</a></li>
+                <li><a class="nav-link" href="/">Home</a></li>
+                <li><a class="nav-link" href="/allProduct">Products</a></li>
+                <li><a class="nav-link" href="/about">About</a></li>
+                <li><a class="nav-link" href="/contact">Contact</a></li>
             </ul>
 
             <img src="storage/image/maneviz.png" alt="MANEVIZ Logo" class="logo">
@@ -529,15 +518,21 @@
                 </div>
 
                 <div class="nav-icons">
-                    <span class="nav-icon cart-icon" onclick="toggleCart()">
+                    <!-- Cart Icon with Link -->
+                    <a href="{{ url('/cart') }}" class="nav-icon cart-icon" title="Shopping Cart">
                         <i class="bi bi-cart3"></i>
-                    </span>
-                    <span class="nav-icon">
+                        <span class="cart-badge" id="cartCount">3</span>
+                    </a>
+
+                    <!-- Wishlist Icon with Link -->
+                    <a href="{{ url('/wishlist') }}" class="nav-icon" title="Wishlist">
                         <i class="bi bi-heart"></i>
-                    </span>
-                    <span class="nav-icon">
+                    </a>
+
+                    <!-- Profile Icon with Link (conditional based on auth status) -->
+                    <a href="/profile" class="nav-icon" title="Profile" id="profileIcon">
                         <i class="bi bi-person-circle"></i>
-                    </span>
+                    </a>
                 </div>
             </div>
 
@@ -585,34 +580,22 @@
                         </div>
                     </div>
 
-                   @guest
                     <div class="auth-buttons">
-                        <a href="{{ route('signIn') }}" class="auth-btn sign-in">Sign In</a>
-                        <a href="{{ route('signUp') }}" class="auth-btn sign-up">Sign Up</a>
+                        <a href="/signin" class="auth-btn sign-in">Sign In</a>
+                        <a href="/signup" class="auth-btn sign-up">Sign Up</a>
                     </div>
-                    @else
-                    <div class="auth-buttons">
-                        <div style="text-align: left; color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
-                            Selamat datang, <strong>{{ Auth::user()->name }}</strong>!
-                        </div>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="auth-btn sign-in">Logout</button>
-                        </form>
-                    </div>
-                    @endguest
                 </div>
 
                 <!-- Right Section -->
                 <div class="footer-right">
                     <ul class="footer-links">
-                        <li><a href="{{ url('/refundPolicy') }}">Refund Policy</a></li>
+                        <li><a href="/refundPolicy">Refund Policy</a></li>
                         <hr>
-                        <li><a href="{{ url('/howToOrder') }}">How To Order</a></li>
+                        <li><a href="/howToOrder">How To Order</a></li>
                         <hr>
-                        <li><a href="{{ url('/about') }}">About</a></li>
+                        <li><a href="/about">About</a></li>
                         <hr>
-                        <li><a href="{{ url('/paymentConfirmation') }}">Payment Confirmation</a></li>
+                        <li><a href="/paymentConfirmation">Payment Confirmation</a></li>
                         <hr>
                         <li class="copy">Copyright © 2025 MANEVIZ</li>
                     </ul>
@@ -645,11 +628,38 @@
             });
         });
 
-        // Cart toggle function
-        function toggleCart() {
-            console.log('Cart clicked');
-            // Add your cart functionality here
+        // Dynamic cart count update function
+        function updateCartCount(count) {
+            const cartBadge = document.getElementById('cartCount');
+            if (cartBadge) {
+                cartBadge.textContent = count;
+                if (count === 0) {
+                    cartBadge.style.display = 'none';
+                } else {
+                    cartBadge.style.display = 'flex';
+                }
+            }
         }
+
+        // Profile icon link update based on authentication
+        function updateProfileLink(isAuthenticated, profileUrl = '/profile', loginUrl = '/signin') {
+            const profileIcon = document.getElementById('profileIcon');
+            if (profileIcon) {
+                profileIcon.href = isAuthenticated ? profileUrl : loginUrl;
+                profileIcon.title = isAuthenticated ? 'Profile' : 'Sign In';
+            }
+        }
+
+        // Search functionality
+        document.querySelector('.search-bar').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value.trim();
+                if (searchTerm) {
+                    // Redirect to search results page
+                    window.location.href = `/search?q=${encodeURIComponent(searchTerm)}`;
+                }
+            }
+        });
 
         // Add smooth scrolling and interaction effects
         document.addEventListener('DOMContentLoaded', function() {
@@ -676,25 +686,10 @@
                 observer.observe(el);
             });
 
-            // Add click handlers for auth buttons
-            document.querySelectorAll('.auth-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const action = this.classList.contains('sign-in') ? 'Sign In' : 'Sign Up';
-                    console.log(`${action} clicked`);
-                    // Add your authentication logic here
-                });
-            });
-
-            // Add click handlers for social icons
-            document.querySelectorAll('.social-icon').forEach(icon => {
-                icon.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const platform = this.getAttribute('title');
-                    console.log(`${platform} social icon clicked`);
-                    // Add your social media redirect logic here
-                });
-            });
+            // Example usage of dynamic functions
+            // updateCartCount(3); // Set cart count
+            // updateProfileLink(false); // Set for unauthenticated user
+            // updateProfileLink(true, '/dashboard'); // Set for authenticated user with custom profile URL
         });
     </script>
 
