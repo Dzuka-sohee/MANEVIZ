@@ -267,7 +267,6 @@
         height: 100vh;
         background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('storage/image/bannerfiks.jpeg');
         background-size: cover;
-        background-position: center;
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -282,12 +281,13 @@
     }
 
     .hero-content h1 {
-        font-size: 4.5rem;
+        font-size: 3.5rem;
         font-weight: 800;
         line-height: 1.1;
         margin-bottom: 20px;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         letter-spacing: -2px;
+        margin-left: -30px;
     }
 
     .hero-content .highlight {
@@ -399,7 +399,7 @@
     <h3>Built for The Grind, Styled by Chaos</h3>
     <hr>
 
-     <h2>Timeless Choice</h2>
+    <h2>Timeless Choice</h2>
 
     <!-- Product Grid -->
     <div class="container">
@@ -506,7 +506,7 @@
 
 <!-- Timeless Choice -->
 <section class="timeless">
-    
+
 </section>
 
 <script>

@@ -174,7 +174,7 @@
         }
 
         .nav-icon {
-            color: white;
+            color: black; /* Changed from white to black */
             font-size: 1.2rem;
             cursor: pointer;
             transition: color 0.3s ease;
@@ -488,6 +488,23 @@
             height: 80px;
             width: auto;
         }
+
+        /* Demo content for testing scroll effect */
+        .demo-content {
+            height: 200vh;
+            padding: 150px 20px 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .demo-text {
+            font-size: 2rem;
+            font-weight: 300;
+        }
     </style>
 </head>
 
@@ -497,17 +514,13 @@
     <nav class="navbar" id="navbar">
         <div class="nav-content">
             <ul class="nav-menu">
-                @auth
                 <li><a class="nav-link" href="{{ url('/') }}">Home</a></li>
-                @else
-                <li><a class="nav-link" href="{{ url('/') }}">Home</a></li>
-                @endauth
                 <li><a class="nav-link" href="{{ url('/allProduct') }}">Products</a></li>
                 <li><a class="nav-link" href="{{ url('/about') }}">About</a></li>
                 <li><a class="nav-link" href="{{ url('/contact') }}">Contact</a></li>
             </ul>
 
-            <img src="storage/image/maneviz.png" alt="TIMELESS Logo" class="logo">
+            <img src="storage/image/maneviz.png" alt="MANEVIZ Logo" class="logo">
 
             <div class="nav-right">
                 <div class="search-container">
@@ -515,7 +528,6 @@
                     <span class="search-icon">⌕</span>
                 </div>
 
-                @auth
                 <div class="nav-icons">
                     <span class="nav-icon cart-icon" onclick="toggleCart()">
                         <i class="bi bi-cart3"></i>
@@ -527,7 +539,6 @@
                         <i class="bi bi-person-circle"></i>
                     </span>
                 </div>
-                @endauth
             </div>
 
         </div>
@@ -538,14 +549,13 @@
     </main>
 
     <!-- Footer -->
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-main">
                 <!-- Left Section -->
                 <div class="footer-left">
                     <div class="footer-logo">
-                        <img src="storage/image/maneviz-white.png">
+                        <img src="storage/image/maneviz-white.png" alt="MANEVIZ Logo">
                     </div>
 
                     <div class="footer-social-section">
@@ -575,10 +585,22 @@
                         </div>
                     </div>
 
+                   @guest
                     <div class="auth-buttons">
-                        <a href="#" class="auth-btn sign-in">Sign In</a>
-                        <a href="#" class="auth-btn sign-up">Sign Up</a>
+                        <a href="{{ route('signIn') }}" class="auth-btn sign-in">Sign In</a>
+                        <a href="{{ route('signUp') }}" class="auth-btn sign-up">Sign Up</a>
                     </div>
+                    @else
+                    <div class="auth-buttons">
+                        <div style="text-align: left; color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
+                            Selamat datang, <strong>{{ Auth::user()->name }}</strong>!
+                        </div>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="auth-btn sign-in">Logout</button>
+                        </form>
+                    </div>
+                    @endguest
                 </div>
 
                 <!-- Right Section -->
@@ -596,11 +618,9 @@
                     </ul>
                 </div>
             </div>
-
-            <!-- Footer Bottom -->
-
         </div>
     </footer>
+
     <script>
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
@@ -625,6 +645,11 @@
             });
         });
 
+        // Cart toggle function
+        function toggleCart() {
+            console.log('Cart clicked');
+            // Add your cart functionality here
+        }
 
         // Add smooth scrolling and interaction effects
         document.addEventListener('DOMContentLoaded', function() {
@@ -672,7 +697,6 @@
             });
         });
     </script>
-
 
 </body>
 

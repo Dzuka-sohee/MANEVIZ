@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
 
+
 // ====================
 // Halaman Umum (Public)
 // ====================
@@ -22,7 +23,7 @@ Route::view('/paymentConfirmation', 'paymentConfirmation')->name('payment.confir
 Route::get('/produk/{slug}', function($slug, Request $request) {
     // Get product data from query parameter atau dari database
     $productData = $request->get('data');
-    
+
     if ($productData) {
         $product = json_decode($productData, true);
     } else {
@@ -155,7 +156,7 @@ Route::get('/produk/{slug}', function($slug, Request $request) {
                 'default_color' => 'White'
             ]
         ];
-        
+
         // Return product data atau default jika tidak ditemukan
         $product = $products[$slug] ?? [
             'name' => ucwords(str_replace('-', ' ', $slug)),
@@ -179,12 +180,11 @@ Route::get('/produk/{slug}', function($slug, Request $request) {
             'default_color' => 'White'
         ];
     }
-    
+
     return view('detailproduk', compact('product'));
 })->name('product.detail');
 
 // Route yang sudah ada sebelumnya (keep this if you still need it)
-Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
 // =====================
 // Guest (Belum Login)
@@ -217,3 +217,8 @@ Route::get('/login/google', [LoginController::class, 'redirectToGoogle'])->name(
 Route::get('/login/google/callback', [LoginController::class, 'handleGoogleCallback']);
 Route::get('/auth/google', [RegisterController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [RegisterController::class, 'handleGoogleCallback']);
+
+// ✅ Route untuk Register/Login via Google
+Route::get('/register/google', [RegisterController::class, 'redirectToGoogle'])->name('register.google');
+Route::get('/register/google/callback', [RegisterController::class, 'handleGoogleCallback']);
+

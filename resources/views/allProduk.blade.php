@@ -646,7 +646,7 @@
                             </div>
                             <button class="product-arrow">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M5 12h14m-7-7 7 7-7 7"/>
+                                    <path d="M5 12h14m-7-7 7 7-7 7" />
                                 </svg>
                             </button>
                         </div>
@@ -666,7 +666,7 @@
                             </div>
                             <button class="product-arrow">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M5 12h14m-7-7 7 7-7 7"/>
+                                    <path d="M5 12h14m-7-7 7 7-7 7" />
                                 </svg>
                             </button>
                         </div>
@@ -686,7 +686,7 @@
                             </div>
                             <button class="product-arrow">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M5 12h14m-7-7 7 7-7 7"/>
+                                    <path d="M5 12h14m-7-7 7 7-7 7" />
                                 </svg>
                             </button>
                         </div>
@@ -706,7 +706,7 @@
                             </div>
                             <button class="product-arrow">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M5 12h14m-7-7 7 7-7 7"/>
+                                    <path d="M5 12h14m-7-7 7 7-7 7" />
                                 </svg>
                             </button>
                         </div>
@@ -766,37 +766,37 @@
             <div class="products-grid">
                 @for($i = 1; $i <= 16; $i++)
                     <div class="product-card">
-                        <div class="product-image">
-                            <img src="storage/image/produk2.jpg" alt="Product {{ $i }}">
-                        </div>
-                        <div class="product-info">
-                            <div class="product-content">
-                                <div class="product-details">
-                                    <h4 class="product-name">
-                                        @if($i % 4 == 1) Cosmos Tshirt
-                                        @elseif($i % 4 == 2) Hoodie
-                                        @elseif($i % 4 == 3) Hoodie
-                                        @else White Tshirt
-                                        @endif
-                                    </h4>
-                                    <p class="product-price">
-                                        @if($i % 4 == 1) IDR 150,000.00
-                                        @elseif($i % 4 == 2) IDR 350,000.00
-                                        @elseif($i % 4 == 3) IDR 350,000.00
-                                        @else IDR 125,000.00
-                                        @endif
-                                    </p>
-                                </div>
-                                <button class="product-arrow">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M5 12h14m-7-7 7 7-7 7"/>
-                                    </svg>
-                                </button>
+                    <div class="product-image">
+                        <img src="storage/image/produk2.jpg" alt="Product {{ $i }}">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-content">
+                            <div class="product-details">
+                                <h4 class="product-name">
+                                    @if($i % 4 == 1) Cosmos Tshirt
+                                    @elseif($i % 4 == 2) Hoodie
+                                    @elseif($i % 4 == 3) Hoodie
+                                    @else White Tshirt
+                                    @endif
+                                </h4>
+                                <p class="product-price">
+                                    @if($i % 4 == 1) IDR 150,000.00
+                                    @elseif($i % 4 == 2) IDR 350,000.00
+                                    @elseif($i % 4 == 3) IDR 350,000.00
+                                    @else IDR 125,000.00
+                                    @endif
+                                </p>
                             </div>
+                            <button class="product-arrow">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14m-7-7 7 7-7 7" />
+                                </svg>
+                            </button>
                         </div>
                     </div>
-                @endfor
             </div>
+            @endfor
+        </div>
 
         <!-- See All Button -->
         <div class="see-all-container">

@@ -13,202 +13,441 @@
 
     <!-- Custom CSS -->
     <style>
-        body {
-            background-color: #f8f9fa;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .login-container {
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 30px;
+            padding: 40px 20px;
         }
-        .login-card {
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,.1);
-            border-radius: 10px;
-            overflow: hidden;
-            max-width: 960px;
+
+        .login-container {
+            display: flex;
+            max-width: 1200px;
             width: 100%;
+            min-height: 400px; /* Kurangi lagi tinggi minimum */
+            height: auto; /* Biarkan tinggi menyesuaikan konten */
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
         }
-        .login-left {
-            background-color: #0d6efd;
-            color: #fff;
-            padding: 40px 30px;
+
+        /* Left Side - Image */
+        .image-section {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 24px 0 0 24px;
+            min-height: 400px; /* Kurangi lagi tinggi minimum */
         }
-        .login-left h5 {
-            font-weight: bold;
-        }
-        .login-right {
-            padding: 40px 30px;
-        }
-        .divider {
-            text-align: center;
-            margin: 20px 0;
+
+        .image-container {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             position: relative;
         }
+
+        /* Placeholder untuk foto yang akan Anda masukkan */
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect width="400" height="600" fill="%23f8f9fa"/><text x="200" y="300" text-anchor="middle" fill="%23666" font-size="16" font-family="Arial">Tempatkan foto Anda di sini</text></svg>') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Right Side - Form */
+        .form-section {
+            flex: 1;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 40px; /* Kurangi lagi padding atas-bawah */
+            border-radius: 0 24px 24px 0;
+            min-height: 400px; /* Kurangi lagi tinggi minimum */
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 15px; /* Kurangi lagi margin */
+        }
+
+        .logo {
+            font-size: 28px; /* Kecilkan logo */
+            font-weight: 800;
+            color: #000;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 36px; /* Kecilkan icon */
+            height: 36px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .welcome-title {
+            font-size: 28px; /* Kecilkan title */
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 6px; /* Kurangi margin */
+            text-align: left;
+        }
+
+        .welcome-subtitle {
+            color: #666;
+            font-size: 14px; /* Kecilkan font */
+            margin-bottom: 16px; /* Kurangi lagi margin */
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 12px; /* Kurangi lagi spacing antar field */
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px; /* Kurangi padding input */
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            background-color: #fff;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #000;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control.is-invalid {
+            border-color: #ef4444;
+        }
+
+        .btn-signin {
+            width: 100%;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 12px; /* Kurangi padding button */
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 6px;
+            margin-bottom: 12px; /* Kurangi lagi margin */
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-signin:hover {
+            background-color: #1f2937;
+            transform: translateY(-1px);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 10px 0; /* Kurangi lagi margin */
+        }
+
         .divider::before,
         .divider::after {
-            content: "";
+            content: '';
+            flex: 1;
             height: 1px;
-            background: #dee2e6;
-            position: absolute;
-            top: 50%;
-            width: 40%;
+            background: #e5e7eb;
         }
-        .divider::before {
-            left: 0;
-        }
-        .divider::after {
-            right: 0;
-        }
-        .divider span {
-            padding: 0 10px;
-            background: #fff;
-            position: relative;
-            z-index: 1;
+
+        .divider-text {
+            padding: 0 16px;
+            color: #9ca3af;
             font-size: 14px;
-            color: #6c757d;
+            font-weight: 500;
         }
-        .btn-login {
+
+        .btn-google {
+            width: 100%;
+            height: 42px; /* Kurangi tinggi button */
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px; /* Kurangi lagi margin */
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-size: 14px; /* Kecilkan font */
+            font-weight: 500;
+            color: #374151;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .btn-google:hover {
+            border-color: #d1d5db;
+            background-color: #f9fafb;
+            color: #374151;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .signup-link {
+            color: #6b7280;
+            font-size: 14px; /* Kecilkan font */
+            text-align: center;
+        }
+
+        .signup-link a {
+            color: #ef4444;
+            text-decoration: none;
             font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            margin-bottom: 24px;
+            border-radius: 12px;
+            border: none;
+            padding: 16px;
+        }
+
+        .alert-success {
+            background-color: #f0fdf4;
+            color: #166534;
+        }
+
+        .alert-danger {
+            background-color: #fef2f2;
+            color: #dc2626;
+        }
+
+        .text-danger {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #ef4444;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+                align-items: flex-start; /* Ubah dari center ke flex-start */
+                padding-top: 30px; /* Tambah padding atas */
+            }
+
+            .login-container {
+                flex-direction: column;
+                height: auto;
+                min-height: auto; /* Hilangkan min-height di mobile */
+                max-width: 400px;
+            }
+
+            .image-section {
+                display: none;
+            }
+
+            .form-section {
+                padding: 40px 30px;
+                border-radius: 24px;
+                min-height: auto; /* Hilangkan min-height di mobile */
+            }
+
+            .welcome-title {
+                font-size: 28px;
+                text-align: center;
+            }
+
+            .welcome-subtitle {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 5px;
+                padding-top: 20px; /* Kurangi padding atas di layar kecil */
+            }
+
+            .login-container {
+                margin: 0;
+                border-radius: 16px;
+            }
+
+            .form-section {
+                padding: 30px 20px;
+                border-radius: 16px;
+            }
+
+            .form-container {
+                max-width: 100%;
+            }
+        }
+
+        /* Tambahan untuk memastikan tidak ada overflow */
+        @media (max-height: 700px) {
+            body {
+                align-items: flex-start;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
+            .login-container {
+                min-height: auto;
+            }
+
+            .image-section,
+            .form-section {
+                min-height: auto;
+            }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <div class="login-card row g-0">
-            <!-- Left Side - Branding -->
-            <div class="col-md-6 login-left d-flex flex-column justify-content-center text-center">
-                <div>
-                    <div class="mb-4">
-                        <img src="{{ asset('storage/image/maneviz-white.png') }}" alt="MANEVIZ Logo" height="80">
-                    </div>
-                    <p class="mb-4">Platform fashion terpercaya dengan koleksi premium dan berkualitas tinggi</p>
-                    <div class="mb-3">
-                        <i class="bi bi-shield-check fs-2 mb-2"></i>
-                        <h5>Aman & Terpercaya</h5>
-                        <p class="mb-0">Transaksi Anda dijamin aman dengan sistem keamanan terdepan</p>
-                    </div>
+        <!-- Left Side - Image Section -->
+        <div class="image-section">
+            <div class="image-container">
+                <!-- Ganti dengan foto Anda -->
+                <div class="image-placeholder">
+                    <!-- Tempatkan <img> tag Anda di sini -->
+                    <img src="storage/image/login-banner.jpg" alt="MANEVIZ" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
             </div>
+        </div>
 
-            <!-- Right Side - Login Form -->
-            <div class="col-md-6 login-right">
-                <div class="text-center mb-4">
-                    <h2 class="fw-bold text-dark">Selamat Datang!</h2>
-                    <p class="text-muted">Silakan masuk ke akun Anda</p>
+        <!-- Right Side - Form Section -->
+        <div class="form-section">
+            <div class="form-container">
+                <!-- Logo -->
+                <div class="logo-container">
+                    <div class="logo">
+                        <div class="logo-icon">🦁</div>
+                        MANEVIZ
+                    </div>
                 </div>
 
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-                    </div>
-                @endif
+                <!-- Welcome Text -->
+                <h1 class="welcome-title">Welcome Back!</h1>
+                <p class="welcome-subtitle">Enter your data</p>
 
-                @if ($errors->any())
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-                    </div>
-                @endif
+                <!-- Alerts -->
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
+                    <ul class="mb-0 list-unstyled">
+                        <li>Please fill out this field.</li>
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                </div>
 
                 <!-- Login Form -->
-                <form method="POST" action="{{ route('signIn') }}">
-                    @csrf
+                <form method="POST" action="#" onsubmit="return false;">
+                    <!-- Username Field -->
+                    <div class="form-group">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text"
+                               class="form-control"
+                               id="username"
+                               name="username"
+                               value="firman7@gmail.com"
+                               placeholder="Enter your username"
+                               required autofocus>
+                    </div>
 
                     <!-- Email Field -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label fw-semibold">Email</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                            <input type="email"
-                                   class="form-control @error('email') is-invalid @enderror"
-                                   id="email"
-                                   name="email"
-                                   value="{{ old('email') }}"
-                                   placeholder="Masukkan email Anda"
-                                   required autofocus>
-                        </div>
-                        @error('email')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email"
+                               class="form-control"
+                               id="email"
+                               name="email"
+                               value=""
+                               placeholder="Enter your email address"
+                               required>
+                        <small class="text-danger">Please fill out this field.</small>
                     </div>
 
                     <!-- Password Field -->
-                    <div class="mb-3">
-                        <label for="password" class="form-label fw-semibold">Password</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                            <input type="password"
-                                   class="form-control @error('password') is-invalid @enderror"
-                                   id="password"
-                                   name="password"
-                                   placeholder="Masukkan password Anda"
-                                   required>
-                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                <i class="bi bi-eye"></i>
-                            </button>
-                        </div>
-                        @error('password')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password"
+                               class="form-control"
+                               id="password"
+                               name="password"
+                               value="••••••"
+                               placeholder="Enter your password"
+                               required>
                     </div>
 
-                    <!-- Remember Me & Forgot -->
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="remember" name="remember">
-                            <label class="form-check-label" for="remember">Ingat saya</label>
-                        </div>
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-decoration-none">Lupa password?</a>
-                        @endif
-                    </div>
-
-                    <!-- Submit -->
-                    <button type="submit" class="btn btn-primary btn-login w-100 mb-3">
-                        <i class="bi bi-box-arrow-in-right me-2"></i> Masuk
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-signin">
+                        Sign In
                     </button>
                 </form>
 
                 <!-- Divider -->
-                <div class="divider"><span>atau</span></div>
+                <div class="divider">
+                    <span class="divider-text">atau login dengan</span>
+                </div>
 
-                <!-- Google Login Button -->
-                <a href="{{ route('login.google') }}" class="btn btn-outline-danger w-100 mb-3 d-flex align-items-center justify-content-center">
-                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google Logo" width="20" class="me-2">
-                    Masuk dengan Google
+                <!-- Google Login -->
+                <a href="{{ route('register.google') }}" class="btn-google">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="20" height="20">
+                    Google
                 </a>
 
-                <!-- Register Link -->
-                <div class="text-center">
-                    <p class="mb-0">Belum punya akun? 
-                        <a href="{{ route('signUp') }}" class="fw-semibold text-decoration-none">Daftar sekarang</a>
-                    </p>
-                </div>
+                <!-- Sign Up Link -->
+                <p class="signup-link">
+                    Don't have an account? <a href={{ url('signUp') }}>Sign Up</a>
+                </p>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Toggle Password Script -->
-    <script>
-        document.getElementById('togglePassword').addEventListener('click', function () {
-            const password = document.getElementById('password');
-            const icon = this.querySelector('i');
-            const isPassword = password.type === 'password';
-            password.type = isPassword ? 'text' : 'password';
-            icon.classList.toggle('bi-eye', !isPassword);
-            icon.classList.toggle('bi-eye-slash', isPassword);
-        });
-    </script>
 </body>
 </html>

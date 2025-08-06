@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Auth\AuthController;
 use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends Controller
@@ -63,32 +64,31 @@ class RegisterController extends Controller
     // ✅ Tambahan untuk Register/Login dengan Google
     public function redirectToGoogle()
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')->stateless()->redirect();
     }
 
     public function handleGoogleCallback()
-{
-    try {
-        // Panggil stateless SEBELUM user()
-        $googleUser = Socialite::driver('google')->stateless()->user();
+    {
+        try {
+            $googleUser = Socialite::driver('google')->stateless()->user();
 
-        $user = User::where('email', $googleUser->getEmail())->first();
+            $user = User::where('email', $googleUser->getEmail())->first();
 
-        if (!$user) {
-            $user = User::create([
-                'name' => $googleUser->getName(),
-                'email' => $googleUser->getEmail(),
-                'password' => Hash::make(uniqid()), // password acak
-                'role' => 'customer',
-                'is_active' => true,
-            ]);
+            if (!$user) {
+                $user = User::create([
+                    'name' => $googleUser->getName(),
+                    'email' => $googleUser->getEmail(),
+                    'password' => Hash::make(uniqid()), // password acak
+                    'role' => 'customer',
+                    'is_active' => true,
+                ]);
+            }
+
+            Auth::login($user);
+
+            return redirect('/')->with('success', 'Login menggunakan Google berhasil. Selamat datang, ' . $user->name . '!');
+        } catch (\Exception $e) {
+            return redirect('/signUp')->withErrors(['error' => 'Gagal login dengan Google.']);
         }
-
-        Auth::login($user);
-
-        return redirect('/')->with('success', 'Login menggunakan Google berhasil. Selamat datang, ' . $user->name . '!');
-    } catch (\Exception $e) {
-        return redirect('/signUp')->withErrors(['error' => 'Gagal login dengan Google.']);
     }
-}
 }
