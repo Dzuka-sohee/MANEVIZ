@@ -2,19 +2,13 @@
 
 @section('content')
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Montserrat', sans-serif;
-        line-height: 1.6;
-        color: #333;
-        background-color: white;
     }
 
     /* style back */
@@ -24,7 +18,6 @@
         align-items: flex-start;
         padding-left: 20px;
         padding-right: 20px;
-
     }
 
     .styleback img {
@@ -72,16 +65,13 @@
         font-weight: 600;
     }
 
-    /* Tambahan CSS untuk membuat tampilan lebih sesuai dengan gambar */
+    /* Container */
     .container {
         max-width: 1200px;
         margin: 0 auto;
     }
 
-    /* Replace the existing product card styles with these updated ones */
-
-    /* Replace the existing product card styles with these updated ones */
-
+    /* Product Grid */
     .product-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -195,7 +185,7 @@
         letter-spacing: -0.5px;
     }
 
-    /* Placeholder untuk gambar yang belum ada */
+    /* Placeholder untuk gambar */
     .placeholder-image {
         width: 100%;
         height: 100%;
@@ -210,63 +200,14 @@
         font-weight: 500;
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .product-grid {
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 30px 15px;
-        }
-
-        .product-info {
-            padding: 20px;
-        }
-
-        .product-image {
-            height: 260px;
-            margin: 12px;
-            width: calc(100% - 24px);
-        }
-    }
-
-    @media (max-width: 480px) {
-        .product-grid {
-            grid-template-columns: 1fr;
-            gap: 20px;
-            padding: 20px 10px;
-        }
-
-        .product-card {
-            border-radius: 16px;
-        }
-
-        .product-image {
-            height: 240px;
-            margin: 10px;
-            width: calc(100% - 20px);
-            border-radius: 12px;
-        }
-    }
-
-    /* Mobile Menu */
-    .mobile-menu-toggle {
-        display: none;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
-
-    .navbar.scrolled .mobile-menu-toggle {
-        color: #333;
-    }
-
     /* Hero Section */
     .hero {
         height: 100vh;
-        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('storage/image/bannerfiks.jpeg');
+        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('image/bannerfiks.jpeg');
         background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -295,33 +236,62 @@
         font-weight: 900;
     }
 
-    /* Responsive untuk hero text */
-    @media (max-width: 768px) {
+    /* Banner */
+    .banner2 {
+        margin-bottom: 80px;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* RESPONSIVE STYLES */
+    
+    /* Large Desktop (1200px+) */
+    @media (min-width: 1200px) {
+        .product-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* Tablet & Desktop (768px - 1199px) */
+    @media (max-width: 1199px) and (min-width: 768px) {
         .hero {
             padding-left: 40px;
             padding-right: 40px;
+            background-position: center center;
+            background-attachment: scroll;
         }
 
         .hero-content h1 {
             font-size: 3rem;
             letter-spacing: -1px;
         }
+
+        .product-grid {
+            gap: 80px;
+        }
     }
 
-    @media (max-width: 480px) {
+    /* Tablet (768px - 991px) */
+    @media (max-width: 991px) and (min-width: 768px) {
         .hero {
-            padding-left: 20px;
-            padding-right: 20px;
+            background-position: 60% center;
         }
 
-        .hero-content h1 {
-            font-size: 2.2rem;
-            letter-spacing: -0.5px;
+        .product-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
         }
-    }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
         .nav-menu {
             display: none;
         }
@@ -353,7 +323,79 @@
         }
     }
 
-    @media (max-width: 480px) {
+    /* Mobile Large (481px - 767px) */
+    @media (max-width: 767px) {
+        .hero {
+            padding-left: 20px;
+            padding-right: 20px;
+            background-position: 70% center;
+            background-attachment: scroll;
+            min-height: 60vh;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            letter-spacing: -0.5px;
+            margin-left: 0;
+        }
+
+        .styleback {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .styleback img {
+            padding: 0 10px;
+            margin-top: 40px;
+        }
+
+        .styleback h4 {
+            padding-left: 15px;
+            margin-top: 20px;
+        }
+
+        .styleback h3 {
+            padding-left: 15px;
+        }
+
+        .styleback h2 {
+            padding-left: 15px;
+        }
+
+        .product-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px 10px;
+        }
+
+        .product-image {
+            height: 160px;
+        }
+
+        .product-info {
+            padding: 15px 16px 18px;
+        }
+
+        .product-info h4 {
+            font-size: 15px;
+        }
+
+        .product-info p {
+            font-size: 12px;
+        }
+
+        .color-info {
+            font-size: 12px !important;
+        }
+
+        .price {
+            font-size: 14px !important;
+        }
+
+        .banner2 {
+            margin-bottom: 40px;
+        }
+
         .search-bar {
             width: 120px;
         }
@@ -363,21 +405,135 @@
         }
     }
 
-    /* Animations */
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
+    /* Mobile Small (320px - 480px) - ANDROID PHONES 2 COLUMNS */
+    @media (max-width: 480px) {
+        .hero {
+            padding-left: 15px;
+            padding-right: 15px;
+            background-position: 75% center;
+            background-attachment: scroll;
+            min-height: 50vh;
         }
 
-        to {
-            opacity: 1;
-            transform: translateY(0);
+        .hero-content h1 {
+            font-size: 2.2rem;
+            letter-spacing: 0;
+        }
+
+        .styleback {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .styleback img {
+            padding: 0 5px;
+            margin-top: 30px;
+        }
+
+        .styleback h4 {
+            padding-left: 10px;
+            font-size: 14px;
+        }
+
+        .styleback h3 {
+            padding-left: 10px;
+            font-size: 18px;
+        }
+
+        .styleback h2 {
+            padding-left: 10px;
+            font-size: 22px;
+        }
+
+        /* TETAP 2 KOLOM untuk Android phones */
+        .product-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px 5px;
+        }
+
+        .product-card {
+            border-radius: 16px;
+            margin: 0 2px;
+        }
+
+        .product-image {
+            height: 140px;
+            margin: 8px;
+            width: calc(100% - 16px);
+            border-radius: 10px;
+        }
+
+        .product-info {
+            padding: 12px 14px 16px;
+        }
+
+        .product-info h4 {
+            font-size: 14px;
+        }
+
+        .product-info p {
+            font-size: 11px;
+        }
+
+        .color-info {
+            font-size: 11px !important;
+        }
+
+        .price {
+            font-size: 13px !important;
+        }
+
+        .product-badge {
+            padding: 4px 8px;
+            font-size: 9px;
+            top: 10px;
+            left: 10px;
+        }
+
+        .banner2 {
+            margin-bottom: 30px;
         }
     }
 
-    .banner2{
-        margin-bottom: 80px;
+    /* Extra Small Mobile (below 320px) */
+    @media (max-width: 319px) {
+        .hero {
+            background-position: 80% center;
+            min-height: 45vh;
+        }
+
+        .hero-content h1 {
+            font-size: 1.8rem;
+        }
+
+        .product-grid {
+            padding: 15px 2px;
+        }
+
+        .styleback {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    }
+
+    /* Landscape Mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+        .hero {
+            min-height: 70vh;
+            background-position: center center;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+    }
+
+    /* High DPI/Retina Displays */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        .hero {
+            background-size: cover;
+        }
     }
 </style>
 
@@ -394,7 +550,7 @@
 
 <!-- styleback -->
 <section class="styleback">
-    <img src="storage/image/styleback.png">
+    <img src="image/styleback.png">
     <h4>Fashion</h4>
     <h3>Built for The Grind, Styled by Chaos</h3>
     <hr>
@@ -501,7 +657,7 @@
     </div>
 
     <h2>The Latest</h2>
-    <img src="storage/image/banner.png" class="banner2">
+    <img src="image/banner.png" class="banner2">
 </section>
 
 <!-- Timeless Choice -->
@@ -513,9 +669,9 @@
     // Navbar scroll effect
     window.addEventListener('scroll', function() {
         const navbar = document.getElementById('navbar');
-        if (window.scrollY > 50) {
+        if (navbar && window.scrollY > 50) {
             navbar.classList.add('scrolled');
-        } else {
+        } else if (navbar) {
             navbar.classList.remove('scrolled');
         }
     });
@@ -533,7 +689,7 @@
         });
     });
 
-    // Optional: Add some interactivity
+    // Product card click handler
     document.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', function() {
             const productName = this.querySelector('h4').textContent;

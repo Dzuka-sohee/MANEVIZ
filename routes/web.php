@@ -18,6 +18,8 @@ Route::view('/contact', 'contact')->name('contact');
 Route::view('/refundPolicy', 'refundPolicy')->name('refund.policy');
 Route::view('/howToOrder', 'howToOrder')->name('how.to.order');
 Route::view('/paymentConfirmation', 'paymentConfirmation')->name('payment.confirmation');
+Route::view('/profil', 'profil.profil')->name('profil');
+
 
 // Detail Produk - Route baru untuk halaman detail produk dinamis
 Route::get('/produk/{slug}', function($slug, Request $request) {
@@ -196,6 +198,7 @@ Route::middleware('guest')->group(function () {
 
     // Sign In
     Route::get('/signIn', [AuthController::class, 'showsignInForm'])->name('signIn');
+    Route::get('/login', [AuthController::class, 'showsignInForm'])->name('login');
     Route::post('/signIn', [AuthController::class, 'signIn']);
 });
 
@@ -205,7 +208,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::view('/profile', 'profile')->name('profile');
+    Route::view('/profil', 'profil.profil')->name('profil');
     Route::view('/cart', 'cart')->name('cart');
     Route::view('/wishlist', 'wishlist')->name('wishlist');
     Route::view('/orders', 'orders')->name('orders');
@@ -221,4 +224,9 @@ Route::get('/auth/google/callback', [RegisterController::class, 'handleGoogleCal
 // ✅ Route untuk Register/Login via Google
 Route::get('/register/google', [RegisterController::class, 'redirectToGoogle'])->name('register.google');
 Route::get('/register/google/callback', [RegisterController::class, 'handleGoogleCallback']);
+
+
+
+Route::get('/allProduct', [ProductController::class, 'index'])->name('products.index');
+Route::get('/product/{slug}', [ProductController::class, 'show'])->name('products.show');
 

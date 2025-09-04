@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
     /**
-     * Tampilkan halaman login
+     * Show the login form
      */
-    public function showsignInForm()
+    public function showSignInForm()
     {
         return view('auth.login');
     }
 
     /**
-     * Proses login
+     * Handle login request
      */
     public function signIn(Request $request)
     {
@@ -32,37 +35,50 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $credentials = $request->only('email', 'password');
-        $remember = $request->filled('remember');
+        $remember = $request->has('remember');
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
             $user = Auth::user();
-            if (isset($user->role) && $user->role === 'admin') {
-                return redirect()->intended('/admin/dashboard');
+
+            // Check if user is active
+            if (!$user->is_active) {
+                Auth::logout();
+                return redirect()->back()
+                    ->with('error', 'Akun Anda tidak aktif. Silakan hubungi administrator.');
             }
 
-            return redirect()->intended('/')->with('success', 'Selamat datang kembali, ' . $user->name . '!');
+            // Redirect based on role
+            if ($user->role === 'admin') {
+                return redirect()->intended('/admin/dashboard')
+                    ->with('success', 'Selamat datang, Admin ' . $user->name . '!');
+            }
+
+            return redirect()->intended('/')
+                ->with('success', 'Selamat datang, ' . $user->name . '!');
         }
 
-        return back()->withErrors(['email' => 'Email atau password salah'])->withInput();
+        return redirect()->back()
+            ->withErrors(['email' => 'Email atau password salah'])
+            ->withInput();
     }
 
     /**
-     * Logout user
+     * Handle logout
      */
     public function logout(Request $request)
     {
-        $userName = Auth::user()->name ?? 'User';
-
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'Sampai jumpa lagi, ' . $userName . '!');
+        return redirect('/')->with('success', 'Anda berhasil logout.');
     }
 }

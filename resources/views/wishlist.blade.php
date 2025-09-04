@@ -95,7 +95,7 @@
             font-size: 32px;
             font-weight: 700;
             letter-spacing: -0.025em;
-            margin-bottom: 4px;
+            margin-top: 23px;
         }
 
         .wishlist-count {

@@ -26,15 +26,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+            padding: 20px 15px;
         }
 
         .login-container {
             display: flex;
             max-width: 1200px;
             width: 100%;
-            min-height: 400px; /* Kurangi lagi tinggi minimum */
-            height: auto; /* Biarkan tinggi menyesuaikan konten */
+            min-height: 500px;
             background: #fff;
             border-radius: 24px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
@@ -51,7 +50,7 @@
             justify-content: center;
             overflow: hidden;
             border-radius: 24px 0 0 24px;
-            min-height: 400px; /* Kurangi lagi tinggi minimum */
+            min-height: 500px;
         }
 
         .image-container {
@@ -63,11 +62,10 @@
             position: relative;
         }
 
-        /* Placeholder untuk foto yang akan Anda masukkan */
         .image-placeholder {
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect width="400" height="600" fill="%23f8f9fa"/><text x="200" y="300" text-anchor="middle" fill="%23666" font-size="16" font-family="Arial">Tempatkan foto Anda di sini</text></svg>') center/cover;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect width="400" height="600" fill="%23667eea"/><text x="200" y="280" text-anchor="middle" fill="%23fff" font-size="24" font-family="Arial" font-weight="bold">MANEVIZ</text><text x="200" y="320" text-anchor="middle" fill="%23fff" font-size="16" font-family="Arial">Management Visualization</text></svg>') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -80,9 +78,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 25px 40px; /* Kurangi lagi padding atas-bawah */
+            padding: 40px;
             border-radius: 0 24px 24px 0;
-            min-height: 400px; /* Kurangi lagi tinggi minimum */
+            min-height: 500px;
         }
 
         .form-container {
@@ -92,11 +90,11 @@
 
         .logo-container {
             text-align: center;
-            margin-bottom: 15px; /* Kurangi lagi margin */
+            margin-bottom: 20px;
         }
 
         .logo {
-            font-size: 28px; /* Kecilkan logo */
+            font-size: 28px;
             font-weight: 800;
             color: #000;
             letter-spacing: -1px;
@@ -107,7 +105,7 @@
         }
 
         .logo-icon {
-            width: 36px; /* Kecilkan icon */
+            width: 36px;
             height: 36px;
             background: #000;
             border-radius: 50%;
@@ -119,22 +117,22 @@
         }
 
         .welcome-title {
-            font-size: 28px; /* Kecilkan title */
+            font-size: 28px;
             font-weight: 700;
             color: #000;
-            margin-bottom: 6px; /* Kurangi margin */
+            margin-bottom: 8px;
             text-align: left;
         }
 
         .welcome-subtitle {
             color: #666;
-            font-size: 14px; /* Kecilkan font */
-            margin-bottom: 16px; /* Kurangi lagi margin */
+            font-size: 14px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
         .form-group {
-            margin-bottom: 12px; /* Kurangi lagi spacing antar field */
+            margin-bottom: 16px;
         }
 
         .form-label {
@@ -147,7 +145,7 @@
 
         .form-control {
             width: 100%;
-            padding: 12px; /* Kurangi padding input */
+            padding: 12px 16px;
             border: 2px solid #e5e7eb;
             border-radius: 12px;
             font-size: 16px;
@@ -170,12 +168,12 @@
             background-color: #000;
             color: #fff;
             border: none;
-            padding: 12px; /* Kurangi padding button */
+            padding: 14px;
             border-radius: 12px;
             font-weight: 600;
             font-size: 16px;
-            margin-top: 6px;
-            margin-bottom: 12px; /* Kurangi lagi margin */
+            margin-top: 8px;
+            margin-bottom: 16px;
             transition: all 0.2s ease;
             cursor: pointer;
         }
@@ -188,7 +186,7 @@
         .divider {
             display: flex;
             align-items: center;
-            margin: 10px 0; /* Kurangi lagi margin */
+            margin: 16px 0;
         }
 
         .divider::before,
@@ -208,17 +206,17 @@
 
         .btn-google {
             width: 100%;
-            height: 42px; /* Kurangi tinggi button */
+            height: 48px;
             border: 2px solid #e5e7eb;
             border-radius: 12px;
             background-color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px; /* Kurangi lagi margin */
+            margin-bottom: 16px;
             transition: all 0.2s ease;
             text-decoration: none;
-            font-size: 14px; /* Kecilkan font */
+            font-size: 14px;
             font-weight: 500;
             color: #374151;
             gap: 12px;
@@ -235,8 +233,9 @@
 
         .signup-link {
             color: #6b7280;
-            font-size: 14px; /* Kecilkan font */
+            font-size: 14px;
             text-align: center;
+            margin-top: 8px;
         }
 
         .signup-link a {
@@ -266,25 +265,134 @@
             color: #dc2626;
         }
 
-        .text-danger {
+        .invalid-feedback {
             font-size: 12px;
-            margin-top: 4px;
+            margin-top: 6px;
             color: #ef4444;
+            display: block;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
+        /* RESPONSIVE BREAKPOINTS */
+
+        /* Extra Large Screens - 1400px and up */
+        @media (min-width: 1400px) {
+            .login-container {
+                max-width: 1300px;
+            }
+            
+            .form-section {
+                padding: 60px;
+            }
+
+            .welcome-title {
+                font-size: 32px;
+            }
+
+            .logo {
+                font-size: 32px;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+
+        /* Large Screens - 1200px to 1399px */
+        @media (min-width: 1200px) and (max-width: 1399px) {
+            .login-container {
+                max-width: 1200px;
+            }
+            
+            .form-section {
+                padding: 50px;
+            }
+
+            .welcome-title {
+                font-size: 30px;
+            }
+
+            .logo {
+                font-size: 30px;
+            }
+        }
+
+        /* Desktop - 992px to 1199px */
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .login-container {
+                max-width: 1000px;
+            }
+
+            .form-section {
+                padding: 40px;
+            }
+
+            .welcome-title {
+                font-size: 28px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+        }
+
+        /* Tablet Landscape - 768px to 991px */
+        @media (min-width: 768px) and (max-width: 991px) {
             body {
-                padding: 20px 10px;
-                align-items: flex-start; /* Ubah dari center ke flex-start */
-                padding-top: 30px; /* Tambah padding atas */
+                padding: 20px;
+            }
+
+            .login-container {
+                max-width: 800px;
+                min-height: 450px;
+            }
+
+            .image-section,
+            .form-section {
+                min-height: 450px;
+            }
+
+            .image-section {
+                flex: 0.8;
+            }
+
+            .form-section {
+                flex: 1;
+                padding: 35px 30px;
+            }
+
+            .welcome-title {
+                font-size: 26px;
+            }
+
+            .logo {
+                font-size: 26px;
+            }
+
+            .logo-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 17px;
+            }
+
+            .form-control {
+                padding: 12px 15px;
+            }
+        }
+
+        /* Tablet Portrait - 576px to 767px */
+        @media (min-width: 576px) and (max-width: 767px) {
+            body {
+                padding: 20px;
+                align-items: flex-start;
+                padding-top: 40px;
             }
 
             .login-container {
                 flex-direction: column;
-                height: auto;
-                min-height: auto; /* Hilangkan min-height di mobile */
-                max-width: 400px;
+                max-width: 520px;
+                min-height: auto;
             }
 
             .image-section {
@@ -292,48 +400,335 @@
             }
 
             .form-section {
-                padding: 40px 30px;
+                padding: 40px 35px;
                 border-radius: 24px;
-                min-height: auto; /* Hilangkan min-height di mobile */
+                min-height: auto;
             }
 
             .welcome-title {
-                font-size: 28px;
+                font-size: 26px;
                 text-align: center;
             }
 
             .welcome-subtitle {
                 text-align: center;
+                margin-bottom: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 18px;
+            }
+
+            .logo {
+                font-size: 26px;
+            }
+
+            .logo-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 17px;
             }
         }
 
-        @media (max-width: 480px) {
+        /* Mobile Large - 480px to 575px */
+        @media (min-width: 480px) and (max-width: 575px) {
             body {
-                padding: 15px 5px;
-                padding-top: 20px; /* Kurangi padding atas di layar kecil */
+                padding: 15px;
+                align-items: flex-start;
+                padding-top: 30px;
             }
 
             .login-container {
-                margin: 0;
-                border-radius: 16px;
+                flex-direction: column;
+                max-width: 480px;
+                border-radius: 20px;
+                min-height: auto;
+            }
+
+            .image-section {
+                display: none;
             }
 
             .form-section {
-                padding: 30px 20px;
-                border-radius: 16px;
+                padding: 35px 30px;
+                border-radius: 20px;
+                min-height: auto;
+            }
+
+            .welcome-title {
+                font-size: 24px;
+                text-align: center;
+            }
+
+            .welcome-subtitle {
+                text-align: center;
+                margin-bottom: 22px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .logo-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+            }
+
+            .form-control {
+                padding: 12px 14px;
+                font-size: 16px;
+            }
+
+            .btn-signin {
+                padding: 13px;
+                font-size: 15px;
+            }
+
+            .btn-google {
+                height: 46px;
+                font-size: 14px;
+            }
+
+            .form-group {
+                margin-bottom: 16px;
+            }
+        }
+
+        /* Mobile Medium - 360px to 479px */
+        @media (min-width: 360px) and (max-width: 479px) {
+            body {
+                padding: 15px 10px;
+                align-items: flex-start;
+                padding-top: 25px;
+            }
+
+            .login-container {
+                flex-direction: column;
+                border-radius: 18px;
+                min-height: auto;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .image-section {
+                display: none;
+            }
+
+            .form-section {
+                padding: 30px 25px;
+                border-radius: 18px;
+                min-height: auto;
             }
 
             .form-container {
                 max-width: 100%;
             }
+
+            .welcome-title {
+                font-size: 22px;
+                text-align: center;
+                margin-bottom: 6px;
+            }
+
+            .welcome-subtitle {
+                text-align: center;
+                margin-bottom: 20px;
+                font-size: 13px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 15px;
+            }
+
+            .logo-container {
+                margin-bottom: 18px;
+            }
+
+            .form-group {
+                margin-bottom: 14px;
+            }
+
+            .form-label {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+
+            .form-control {
+                padding: 11px 12px;
+                font-size: 16px; /* Keep 16px to prevent zoom on iOS */
+                border-radius: 10px;
+            }
+
+            .btn-signin {
+                padding: 12px;
+                font-size: 15px;
+                border-radius: 10px;
+                margin-top: 6px;
+                margin-bottom: 14px;
+            }
+
+            .divider {
+                margin: 14px 0;
+            }
+
+            .divider-text {
+                font-size: 13px;
+                padding: 0 12px;
+            }
+
+            .btn-google {
+                height: 44px;
+                font-size: 13px;
+                border-radius: 10px;
+                gap: 10px;
+                margin-bottom: 14px;
+            }
+
+            .signup-link {
+                font-size: 13px;
+                margin-top: 6px;
+            }
+
+            .alert {
+                padding: 14px;
+                margin-bottom: 20px;
+                border-radius: 10px;
+                font-size: 13px;
+            }
+
+            .invalid-feedback {
+                font-size: 11px;
+                margin-top: 4px;
+            }
         }
 
-        /* Tambahan untuk memastikan tidak ada overflow */
-        @media (max-height: 700px) {
+        /* Mobile Small - up to 359px */
+        @media (max-width: 359px) {
             body {
+                padding: 10px 8px;
                 align-items: flex-start;
                 padding-top: 20px;
-                padding-bottom: 20px;
+            }
+
+            .login-container {
+                flex-direction: column;
+                border-radius: 16px;
+                min-height: auto;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .image-section {
+                display: none;
+            }
+
+            .form-section {
+                padding: 25px 18px;
+                border-radius: 16px;
+                min-height: auto;
+            }
+
+            .form-container {
+                max-width: 100%;
+            }
+
+            .welcome-title {
+                font-size: 20px;
+                text-align: center;
+                margin-bottom: 5px;
+            }
+
+            .welcome-subtitle {
+                text-align: center;
+                margin-bottom: 18px;
+                font-size: 12px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .logo-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
+            }
+
+            .logo-container {
+                margin-bottom: 16px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            .form-label {
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+
+            .form-control {
+                padding: 10px 11px;
+                font-size: 16px; /* Keep 16px to prevent zoom on iOS */
+                border-radius: 8px;
+            }
+
+            .btn-signin {
+                padding: 11px;
+                font-size: 14px;
+                border-radius: 8px;
+                margin-top: 5px;
+                margin-bottom: 12px;
+            }
+
+            .divider {
+                margin: 12px 0;
+            }
+
+            .divider-text {
+                font-size: 12px;
+                padding: 0 10px;
+            }
+
+            .btn-google {
+                height: 42px;
+                font-size: 12px;
+                border-radius: 8px;
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+
+            .signup-link {
+                font-size: 12px;
+                margin-top: 5px;
+            }
+
+            .alert {
+                padding: 12px;
+                margin-bottom: 18px;
+                border-radius: 8px;
+                font-size: 12px;
+            }
+
+            .invalid-feedback {
+                font-size: 10px;
+                margin-top: 3px;
+            }
+        }
+
+        /* Very Short Screens */
+        @media (max-height: 600px) {
+            body {
+                align-items: flex-start;
+                padding-top: 15px;
+                padding-bottom: 15px;
             }
 
             .login-container {
@@ -343,6 +738,167 @@
             .image-section,
             .form-section {
                 min-height: auto;
+            }
+
+            .form-section {
+                padding: 25px 30px;
+            }
+
+            .logo-container {
+                margin-bottom: 15px;
+            }
+
+            .welcome-title {
+                margin-bottom: 5px;
+            }
+
+            .welcome-subtitle {
+                margin-bottom: 15px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+        }
+
+        /* Landscape orientation on mobile devices */
+        @media (max-height: 500px) and (orientation: landscape) and (max-width: 900px) {
+            body {
+                padding: 10px;
+            }
+
+            .login-container {
+                flex-direction: row;
+                max-width: 750px;
+                min-height: auto;
+                max-height: 90vh;
+            }
+
+            .image-section {
+                display: flex;
+                flex: 0.6;
+                min-height: 320px;
+                max-height: 400px;
+            }
+
+            .form-section {
+                flex: 1;
+                padding: 20px 25px;
+                min-height: 320px;
+                max-height: 400px;
+                overflow-y: auto;
+            }
+
+            .logo-container {
+                margin-bottom: 10px;
+            }
+
+            .welcome-title {
+                font-size: 18px;
+                margin-bottom: 4px;
+            }
+
+            .welcome-subtitle {
+                margin-bottom: 12px;
+                font-size: 12px;
+            }
+
+            .form-group {
+                margin-bottom: 8px;
+            }
+
+            .form-control {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+
+            .btn-signin {
+                padding: 10px;
+                font-size: 14px;
+                margin-top: 4px;
+                margin-bottom: 8px;
+            }
+
+            .divider {
+                margin: 8px 0;
+            }
+
+            .btn-google {
+                height: 36px;
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+
+            .signup-link {
+                font-size: 12px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .logo-icon {
+                width: 26px;
+                height: 26px;
+                font-size: 13px;
+            }
+        }
+
+        /* Ultra-wide screens */
+        @media (min-width: 1600px) {
+            body {
+                padding: 30px 20px;
+            }
+
+            .login-container {
+                max-width: 1400px;
+            }
+
+            .form-section {
+                padding: 70px;
+            }
+
+            .welcome-title {
+                font-size: 34px;
+            }
+
+            .logo {
+                font-size: 34px;
+            }
+
+            .logo-icon {
+                width: 42px;
+                height: 42px;
+                font-size: 22px;
+            }
+        }
+
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            .form-control,
+            .btn-signin,
+            .btn-google {
+                transition: none;
+            }
+
+            .btn-signin:hover,
+            .btn-google:hover {
+                transform: none;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .form-control {
+                border-width: 3px;
+            }
+
+            .btn-signin {
+                border: 2px solid transparent;
+            }
+
+            .btn-google {
+                border-width: 3px;
             }
         }
     </style>
@@ -354,8 +910,8 @@
             <div class="image-container">
                 <!-- Ganti dengan foto Anda -->
                 <div class="image-placeholder">
-                    <!-- Tempatkan <img> tag Anda di sini -->
-                    <img src="storage/image/login-banner.jpg" alt="MANEVIZ" style="width: 100%; height: 100%; object-fit: cover;">
+                    <!-- Uncomment jika ada gambar -->
+                    <img src="{{ asset('image/login-banner.jpg') }}" alt="MANEVIZ" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
             </div>
         </div>
@@ -375,51 +931,74 @@
                 <h1 class="welcome-title">Welcome Back!</h1>
                 <p class="welcome-subtitle">Enter your data</p>
 
-                <!-- Alerts -->
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
-                    <ul class="mb-0 list-unstyled">
-                        <li>Please fill out this field.</li>
-                    </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-                </div>
+                <!-- Success Message -->
+                @if(session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                <!-- Error Messages -->
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul class="mb-0 list-unstyled">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
                 <!-- Login Form -->
-                <form method="POST" action="#" onsubmit="return false;">
-                    <!-- Username Field -->
-                    <div class="form-group">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text"
-                               class="form-control"
-                               id="username"
-                               name="username"
-                               value="firman7@gmail.com"
-                               placeholder="Enter your username"
-                               required autofocus>
-                    </div>
+                <form method="POST" action="{{ route('signIn') }}">
+                    @csrf
 
                     <!-- Email Field -->
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
                         <input type="email"
-                               class="form-control"
+                               class="form-control @error('email') is-invalid @enderror"
                                id="email"
                                name="email"
-                               value=""
+                               value="{{ old('email') }}"
                                placeholder="Enter your email address"
-                               required>
-                        <small class="text-danger">Please fill out this field.</small>
+                               required autofocus>
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Password Field -->
                     <div class="form-group">
                         <label for="password" class="form-label">Password</label>
                         <input type="password"
-                               class="form-control"
+                               class="form-control @error('password') is-invalid @enderror"
                                id="password"
                                name="password"
-                               value="••••••"
                                placeholder="Enter your password"
                                required>
+                        @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Remember Me Checkbox -->
+                    <div class="form-group mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <label class="form-check-label" for="remember" style="font-size: 14px; color: #666;">
+                                Remember me
+                            </label>
+                        </div>
                     </div>
 
                     <!-- Submit Button -->
@@ -434,14 +1013,14 @@
                 </div>
 
                 <!-- Google Login -->
-                <a href="{{ route('register.google') }}" class="btn-google">
+                <a href="{{ route('login.google') }}" class="btn-google">
                     <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="20" height="20">
                     Google
                 </a>
 
                 <!-- Sign Up Link -->
                 <p class="signup-link">
-                    Don't have an account? <a href={{ url('signUp') }}>Sign Up</a>
+                    Don't have an account? <a href="{{ route('signUp') }}">Sign Up</a>
                 </p>
             </div>
         </div>

@@ -27,31 +27,30 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
         .register-container {
             display: flex;
             max-width: 1200px;
             width: 100%;
-            min-height: 500px;
-            height: auto;
+            min-height: 600px;
             background: #fff;
             border-radius: 24px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             overflow: hidden;
         }
 
-        /* Left Side - Form (berkebalikan dari login) */
+        /* Left Side - Form */
         .form-section {
             flex: 1;
             background-color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 30px 40px;
+            padding: 40px;
             border-radius: 24px 0 0 24px;
-            min-height: 500px;
+            min-height: 600px;
         }
 
         .form-container {
@@ -59,10 +58,10 @@
             max-width: 400px;
         }
 
-        /* Logo Container - Wadah untuk logo Anda */
+        /* Logo Container */
         .logo-container {
             text-align: center;
-            padding: 10px 0;
+            padding: 10px 0 20px 0;
         }
 
         .logo-wrapper {
@@ -76,9 +75,6 @@
             transition: all 0.3s ease;
         }
 
-
-
-        /* Placeholder untuk logo */
         .logo-placeholder {
             display: flex;
             align-items: center;
@@ -88,8 +84,8 @@
         }
 
         .logo-image {
-            max-height: 150px;
-            max-width: 250px;
+            max-height: 120px;
+            max-width: 220px;
             height: auto;
             width: auto;
             object-fit: contain;
@@ -102,19 +98,16 @@
             letter-spacing: -0.5px;
         }
 
-        /* Untuk logo image + text */
         .logo-with-image {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        /* Untuk logo hanya image */
         .logo-image-only {
             display: block;
         }
 
-        /* Untuk logo hanya text */
         .logo-text-only {
             font-size: 28px;
             font-weight: 800;
@@ -123,22 +116,22 @@
         }
 
         .welcome-title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
             color: #000;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             text-align: left;
         }
 
         .welcome-subtitle {
             color: #666;
-            font-size: 14px;
-            margin-bottom: 20px;
+            font-size: 16px;
+            margin-bottom: 25px;
             text-align: left;
         }
 
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
 
         .form-label {
@@ -151,12 +144,13 @@
 
         .form-control {
             width: 100%;
-            padding: 12px;
+            padding: 14px 16px;
             border: 2px solid #e5e7eb;
             border-radius: 12px;
             font-size: 16px;
             transition: all 0.2s ease;
             background-color: #fff;
+            line-height: 1.4;
         }
 
         .form-control:focus {
@@ -174,14 +168,15 @@
             background-color: #000;
             color: #fff;
             border: none;
-            padding: 12px;
+            padding: 14px 16px;
             border-radius: 12px;
             font-weight: 600;
             font-size: 16px;
-            margin-top: 10px;
-            margin-bottom: 12px;
+            margin-top: 15px;
+            margin-bottom: 15px;
             transition: all 0.2s ease;
             cursor: pointer;
+            min-height: 50px;
         }
 
         .btn-signup:hover {
@@ -192,7 +187,7 @@
         .divider {
             display: flex;
             align-items: center;
-            margin: 10px 0;
+            margin: 15px 0;
         }
 
         .divider::before,
@@ -212,14 +207,14 @@
 
         .btn-google {
             width: 100%;
-            height: 42px;
+            height: 50px;
             border: 2px solid #e5e7eb;
             border-radius: 12px;
             background-color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             transition: all 0.2s ease;
             text-decoration: none;
             font-size: 14px;
@@ -241,6 +236,7 @@
             color: #6b7280;
             font-size: 14px;
             text-align: center;
+            margin-top: 10px;
         }
 
         .signin-link a {
@@ -296,7 +292,7 @@
 
         /* Terms checkbox */
         .form-check {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .form-check-input {
@@ -306,6 +302,7 @@
         .form-check-label {
             font-size: 13px;
             color: #666;
+            line-height: 1.4;
         }
 
         .form-check-label a {
@@ -317,7 +314,7 @@
             text-decoration: underline;
         }
 
-        /* Right Side - Image (berkebalikan dari login) */
+        /* Right Side - Image */
         .image-section {
             flex: 1;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -327,7 +324,7 @@
             justify-content: center;
             overflow: hidden;
             border-radius: 0 24px 24px 0;
-            min-height: 500px;
+            min-height: 600px;
         }
 
         .image-container {
@@ -348,10 +345,10 @@
             justify-content: center;
         }
 
-        /* Responsive Design */
+        /* Mobile First - Perbaikan Responsivitas */
         @media (max-width: 768px) {
             body {
-                padding: 20px 10px;
+                padding: 15px;
                 align-items: flex-start;
                 padding-top: 30px;
             }
@@ -360,64 +357,341 @@
                 flex-direction: column;
                 height: auto;
                 min-height: auto;
-                max-width: 400px;
+                max-width: 500px;
+                border-radius: 20px;
             }
 
             .image-section {
-                display: none;
+                order: -1;
+                flex: none;
+                height: 200px;
+                min-height: 200px;
+                border-radius: 20px 20px 0 0;
             }
 
             .form-section {
-                padding: 40px 30px;
-                border-radius: 24px;
+                padding: 30px 25px;
+                border-radius: 0 0 20px 20px;
                 min-height: auto;
             }
 
+            .logo-container {
+                padding: 5px 0 15px 0;
+            }
+
+            .logo-image {
+                max-height: 80px;
+                max-width: 150px;
+            }
+
             .welcome-title {
-                font-size: 28px;
+                font-size: 26px;
                 text-align: center;
+                margin-bottom: 6px;
             }
 
             .welcome-subtitle {
                 text-align: center;
+                font-size: 15px;
+                margin-bottom: 20px;
             }
 
-            .logo-wrapper {
-                min-width: 180px;
+            .form-group {
+                margin-bottom: 14px;
+            }
+
+            .form-control {
+                padding: 12px 14px;
+                font-size: 16px;
+            }
+
+            .btn-signup {
+                padding: 12px 16px;
+                font-size: 15px;
+                min-height: 48px;
+            }
+
+            .btn-google {
+                height: 48px;
+                font-size: 14px;
             }
         }
 
         @media (max-width: 480px) {
             body {
-                padding: 15px 5px;
+                padding: 10px;
                 padding-top: 20px;
             }
 
             .register-container {
                 margin: 0;
                 border-radius: 16px;
+                max-width: 100%;
+            }
+
+            .image-section {
+                height: 180px;
+                min-height: 180px;
+                border-radius: 16px 16px 0 0;
             }
 
             .form-section {
-                padding: 30px 20px;
-                border-radius: 16px;
+                padding: 25px 20px;
+                border-radius: 0 0 16px 16px;
             }
 
             .form-container {
                 max-width: 100%;
             }
 
+            .logo-container {
+                padding: 0 0 12px 0;
+            }
+
             .logo-wrapper {
-                min-width: 160px;
+                min-width: 140px;
                 min-height: 50px;
+            }
+
+            .logo-image {
+                max-height: 70px;
+                max-width: 130px;
+            }
+
+            .welcome-title {
+                font-size: 24px;
+                margin-bottom: 5px;
+            }
+
+            .welcome-subtitle {
+                font-size: 14px;
+                margin-bottom: 18px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            .form-label {
+                font-size: 13px;
+                margin-bottom: 6px;
+            }
+
+            .form-control {
+                padding: 11px 12px;
+                font-size: 15px;
+                border-radius: 10px;
+            }
+
+            .btn-signup {
+                padding: 11px 14px;
+                font-size: 15px;
+                min-height: 46px;
+                border-radius: 10px;
+                margin-top: 12px;
+                margin-bottom: 12px;
+            }
+
+            .btn-google {
+                height: 46px;
+                font-size: 13px;
+                border-radius: 10px;
+                gap: 10px;
+            }
+
+            .divider {
+                margin: 12px 0;
+            }
+
+            .divider-text {
+                font-size: 13px;
+                padding: 0 12px;
+            }
+
+            .form-check {
+                margin-bottom: 15px;
+            }
+
+            .form-check-label {
+                font-size: 12px;
+                line-height: 1.3;
+            }
+
+            .signin-link {
+                font-size: 13px;
+                margin-top: 8px;
             }
         }
 
-        @media (max-height: 700px) {
+        @media (max-width: 360px) {
+            body {
+                padding: 8px;
+                padding-top: 15px;
+            }
+
+            .form-section {
+                padding: 20px 15px;
+            }
+
+            .logo-image {
+                max-height: 60px;
+                max-width: 120px;
+            }
+
+            .welcome-title {
+                font-size: 22px;
+            }
+
+            .welcome-subtitle {
+                font-size: 13px;
+            }
+
+            .form-control {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            .btn-signup {
+                padding: 10px 12px;
+                font-size: 14px;
+                min-height: 44px;
+            }
+
+            .btn-google {
+                height: 44px;
+                font-size: 12px;
+            }
+
+            .form-check-label {
+                font-size: 11px;
+            }
+        }
+
+        /* Tablet Portrait */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .register-container {
+                max-width: 900px;
+            }
+            
+            .form-section {
+                padding: 35px;
+            }
+            
+            .logo-image {
+                max-height: 100px;
+                max-width: 180px;
+            }
+            
+            .welcome-title {
+                font-size: 28px;
+            }
+        }
+
+        /* Medium screens */
+        @media (min-width: 901px) and (max-width: 1200px) {
+            .register-container {
+                max-width: 800px;
+            }
+            
+            .form-section {
+                padding: 30px;
+            }
+            
+            .form-container {
+                max-width: 350px;
+            }
+        }
+
+        /* Landscape phones - Perbaikan khusus */
+        @media (max-width: 768px) and (orientation: landscape) and (max-height: 600px) {
             body {
                 align-items: flex-start;
-                padding-top: 20px;
-                padding-bottom: 20px;
+                padding: 10px;
+            }
+
+            .register-container {
+                flex-direction: row;
+                max-width: 100%;
+                min-height: auto;
+                height: auto;
+            }
+
+            .image-section {
+                display: flex;
+                order: 0;
+                flex: 0.6;
+                height: auto;
+                min-height: 400px;
+                border-radius: 24px 0 0 24px;
+            }
+
+            .form-section {
+                flex: 1;
+                padding: 20px 25px;
+                border-radius: 0 24px 24px 0;
+                min-height: 400px;
+            }
+
+            .logo-container {
+                padding: 0 0 10px 0;
+            }
+
+            .logo-image {
+                max-height: 60px;
+                max-width: 120px;
+            }
+
+            .welcome-title {
+                font-size: 22px;
+                margin-bottom: 4px;
+            }
+
+            .welcome-subtitle {
+                font-size: 13px;
+                margin-bottom: 15px;
+            }
+
+            .form-group {
+                margin-bottom: 10px;
+            }
+
+            .form-control {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+
+            .btn-signup {
+                padding: 8px 12px;
+                font-size: 14px;
+                min-height: 40px;
+                margin-top: 8px;
+                margin-bottom: 8px;
+            }
+
+            .btn-google {
+                height: 40px;
+                font-size: 12px;
+            }
+
+            .divider {
+                margin: 8px 0;
+            }
+
+            .form-check {
+                margin-bottom: 10px;
+            }
+
+            .form-check-label {
+                font-size: 11px;
+            }
+        }
+
+        /* Very short screens - Khusus untuk perangkat dengan tinggi terbatas */
+        @media (max-height: 500px) {
+            body {
+                align-items: flex-start;
+                padding: 5px;
+                padding-top: 10px;
             }
 
             .register-container {
@@ -428,6 +702,131 @@
             .form-section {
                 min-height: auto;
             }
+
+            .form-section {
+                padding: 15px 20px;
+            }
+
+            .logo-container {
+                padding: 0 0 8px 0;
+            }
+
+            .welcome-title {
+                font-size: 20px;
+                margin-bottom: 3px;
+            }
+
+            .welcome-subtitle {
+                font-size: 12px;
+                margin-bottom: 12px;
+            }
+
+            .form-group {
+                margin-bottom: 8px;
+            }
+
+            .form-control {
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+
+            .btn-signup {
+                padding: 6px 10px;
+                font-size: 13px;
+                min-height: 36px;
+                margin-top: 6px;
+                margin-bottom: 6px;
+            }
+
+            .btn-google {
+                height: 36px;
+                font-size: 11px;
+            }
+        }
+
+        /* Large desktop screens */
+        @media (min-width: 1400px) {
+            .register-container {
+                max-width: 1400px;
+            }
+
+            .form-section {
+                padding: 50px;
+            }
+
+            .logo-image {
+                max-height: 140px;
+                max-width: 240px;
+            }
+
+            .welcome-title {
+                font-size: 36px;
+            }
+
+            .welcome-subtitle {
+                font-size: 18px;
+            }
+
+            .form-control {
+                padding: 16px 18px;
+                font-size: 17px;
+            }
+
+            .btn-signup {
+                padding: 16px 18px;
+                font-size: 17px;
+                min-height: 54px;
+            }
+
+            .btn-google {
+                height: 54px;
+                font-size: 15px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+
+            .register-container {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            .image-section {
+                display: none;
+            }
+
+            .form-section {
+                border-radius: 0;
+            }
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .form-control {
+                border-color: #000;
+            }
+
+            .btn-google {
+                border-color: #000;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+
+            .btn-signup:hover,
+            .btn-google:hover {
+                transform: none;
+            }
         }
     </style>
 </head>
@@ -437,34 +836,10 @@
         <!-- Left Side - Form Section -->
         <div class="form-section">
             <div class="form-container">
-                <!-- Logo Container - Siap untuk logo Anda -->
+                <!-- Logo Container -->
                 <div class="logo-container">
                     <div class="logo-wrapper">
-                        <!-- OPSI 1: Logo Image + Text -->
-                        <!-- Uncomment dan sesuaikan untuk logo image + text -->
-                        <!--
-                        <div class="logo-with-image">
-                            <img src="path/to/your/logo.png" alt="MANEVIZ Logo" class="logo-image">
-                            <span class="logo-text">MANEVIZ</span>
-                        </div>
-                        -->
-
-                        <!-- OPSI 2: Logo Image Only -->
-                        <!-- Uncomment dan sesuaikan untuk logo hanya image -->
-
-                        <img src="storage/image/maneviz.png" alt="MANEVIZ Logo" class="logo-image logo-image-only">
-
-
-                        <!-- OPSI 3: Logo Text Only (sementara/default) -->
-                        <!-- <div class="logo-text-only">MANEVIZ</div> -->
-
-                        <!-- PLACEHOLDER (akan dihapus setelah logo ditambahkan) -->
-                        <!--
-                        <div class="logo-placeholder">
-                            <i class="bi bi-image"></i>
-                            <span>Logo MANEVIZ</span>
-                        </div>
-                        -->
+                        <img src="image/maneviz.png" alt="MANEVIZ Logo" class="logo-image logo-image-only">
                     </div>
                 </div>
 
@@ -472,72 +847,97 @@
                 <h1 class="welcome-title">Create Account</h1>
                 <p class="welcome-subtitle">Join us today! Please fill in your information</p>
 
-                <!-- Alerts -->
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
+                <!-- Laravel Validation Errors -->
+                @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <ul class="mb-0 list-unstyled">
-                        <li>Please fill out all required fields.</li>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
                     </ul>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
                 </div>
+                @endif
+
+                <!-- Success Message -->
+                @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                </div>
+                @endif
 
                 <!-- Register Form -->
-                <form method="POST" action="#" onsubmit="return validateForm(event);">
+                <form method="POST" action="{{ route('signUp') }}">
+                    @csrf
+
                     <!-- Nama Lengkap Field -->
                     <div class="form-group">
                         <label for="full_name" class="form-label">Nama Lengkap</label>
                         <input type="text"
-                            class="form-control"
+                            class="form-control @error('full_name') is-invalid @enderror"
                             id="full_name"
                             name="full_name"
+                            value="{{ old('full_name') }}"
                             placeholder="Masukkan nama lengkap Anda"
                             required autofocus>
-                        <small class="text-danger" id="full_name_error" style="display: none;">Nama lengkap harus diisi.</small>
+                        @error('full_name')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <!-- Email Field -->
                     <div class="form-group">
                         <label for="email" class="form-label">Email Aktif</label>
                         <input type="email"
-                            class="form-control"
+                            class="form-control @error('email') is-invalid @enderror"
                             id="email"
                             name="email"
+                            value="{{ old('email') }}"
                             placeholder="Masukkan email aktif Anda"
                             required>
-                        <small class="text-danger" id="email_error" style="display: none;">Email harus valid.</small>
+                        @error('email')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <!-- Nomor Handphone Field -->
                     <div class="form-group">
                         <label for="phone" class="form-label">Nomor Handphone</label>
                         <input type="tel"
-                            class="form-control"
+                            class="form-control @error('phone') is-invalid @enderror"
                             id="phone"
                             name="phone"
+                            value="{{ old('phone') }}"
                             placeholder="Contoh: 08123456789"
                             required>
-                        <small class="text-danger" id="phone_error" style="display: none;">Nomor handphone harus valid.</small>
+                        @error('phone')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <!-- Password Field -->
                     <div class="form-group">
                         <label for="password" class="form-label">Password</label>
                         <input type="password"
-                            class="form-control"
+                            class="form-control @error('password') is-invalid @enderror"
                             id="password"
                             name="password"
                             placeholder="Minimal 8 karakter"
                             required>
                         <div class="password-strength" id="password_strength"></div>
-                        <small class="text-danger" id="password_error" style="display: none;">Password minimal 8 karakter.</small>
+                        @error('password')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <!-- Ulangi Password Field -->
                     <div class="form-group">
-                        <label for="confirm_password" class="form-label">Ulangi Password</label>
+                        <label for="password_confirmation" class="form-label">Ulangi Password</label>
                         <input type="password"
                             class="form-control"
-                            id="confirm_password"
-                            name="confirm_password"
+                            id="password_confirmation"
+                            name="password_confirmation"
                             placeholder="Ulangi password yang sama"
                             required>
                         <small class="text-danger" id="confirm_password_error" style="display: none;">Password tidak cocok.</small>
@@ -545,11 +945,19 @@
 
                     <!-- Terms and Conditions -->
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                        <input class="form-check-input @error('terms') is-invalid @enderror"
+                               type="checkbox"
+                               id="terms"
+                               name="terms"
+                               value="1"
+                               {{ old('terms') ? 'checked' : '' }}
+                               required>
                         <label class="form-check-label" for="terms">
                             Saya setuju dengan <a href="#" target="_blank">Syarat & Ketentuan</a> dan <a href="#" target="_blank">Kebijakan Privasi</a>
                         </label>
-                        <small class="text-danger" id="terms_error" style="display: none;">Anda harus menyetujui syarat dan ketentuan.</small>
+                        @error('terms')
+                        <small class="text-danger d-block">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <!-- Submit Button -->
@@ -571,7 +979,7 @@
 
                 <!-- Sign In Link -->
                 <p class="signin-link">
-                    Already have an account? <a href="#">Sign In</a>
+                    Already have an account? <a href="{{ route('signIn') }}">Sign In</a>
                 </p>
             </div>
         </div>
@@ -580,8 +988,7 @@
         <div class="image-section">
             <div class="image-container">
                 <div class="image-placeholder">
-                    <!-- Ganti dengan foto Anda -->
-                    <img src="storage/image/login-banner.jpg" alt="MANEVIZ" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="image/login-banner.jpg" alt="MANEVIZ" style="width: 100%; height: 100%; object-fit: cover;">
                 </div>
             </div>
         </div>
@@ -636,82 +1043,6 @@
             input.value = value;
         }
 
-        // Form validation
-        function validateForm(event) {
-            event.preventDefault();
-
-            let isValid = true;
-
-            // Reset error messages
-            document.querySelectorAll('.text-danger').forEach(el => el.style.display = 'none');
-            document.querySelectorAll('.form-control').forEach(el => el.classList.remove('is-invalid'));
-
-            // Validate full name
-            const fullName = document.getElementById('full_name').value.trim();
-            if (fullName.length < 2) {
-                showError('full_name', 'Nama lengkap minimal 2 karakter.');
-                isValid = false;
-            }
-
-            // Validate email
-            const email = document.getElementById('email').value.trim();
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showError('email', 'Format email tidak valid.');
-                isValid = false;
-            }
-
-            // Validate phone
-            const phone = document.getElementById('phone').value.trim();
-            const phoneRegex = /^(0|62)[0-9]{9,12}$/;
-            if (!phoneRegex.test(phone)) {
-                showError('phone', 'Nomor handphone tidak valid (contoh: 08123456789).');
-                isValid = false;
-            }
-
-            // Validate password
-            const password = document.getElementById('password').value;
-            if (password.length < 8) {
-                showError('password', 'Password minimal 8 karakter.');
-                isValid = false;
-            }
-
-            // Validate confirm password
-            const confirmPassword = document.getElementById('confirm_password').value;
-            if (password !== confirmPassword) {
-                showError('confirm_password', 'Password tidak cocok.');
-                isValid = false;
-            }
-
-            // Validate terms
-            const terms = document.getElementById('terms').checked;
-            if (!terms) {
-                showError('terms', 'Anda harus menyetujui syarat dan ketentuan.');
-                isValid = false;
-            }
-
-            if (isValid) {
-                // Here you would normally submit the form
-                alert('Form berhasil divalidasi! Data siap dikirim.');
-                // document.forms[0].submit();
-            } else {
-                // Show general error alert
-                const alertDiv = document.querySelector('.alert-danger');
-                alertDiv.style.display = 'block';
-            }
-
-            return isValid;
-        }
-
-        function showError(fieldId, message) {
-            const field = document.getElementById(fieldId);
-            const error = document.getElementById(fieldId + '_error');
-
-            field.classList.add('is-invalid');
-            error.textContent = message;
-            error.style.display = 'block';
-        }
-
         // Event listeners
         document.getElementById('password').addEventListener('input', function() {
             checkPasswordStrength(this.value);
@@ -721,8 +1052,8 @@
             formatPhoneNumber(this);
         });
 
-        // Real-time validation
-        document.getElementById('confirm_password').addEventListener('input', function() {
+        // Real-time validation untuk konfirmasi password
+        document.getElementById('password_confirmation').addEventListener('input', function() {
             const password = document.getElementById('password').value;
             const confirmPassword = this.value;
             const errorDiv = document.getElementById('confirm_password_error');
