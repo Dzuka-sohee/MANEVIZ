@@ -37,21 +37,30 @@ class Product extends Model
         'is_featured' => 'boolean',
     ];
 
+    // Relasi ke kategori
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
+    // Relasi ke semua gambar produk
     public function images()
     {
-        return $this->hasMany(ProductImages::class);
-    }
-    public function primaryImage()
-    {
-        return $this->hasOne(ProductImages::class)->where('is_primary', true);
+        return $this->hasMany(ProductImages::class, 'product_id');
     }
 
-    // 🔹 Scope untuk hanya ambil produk aktif
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    // Relasi ke gambar utama produk
+    public function primaryImage()
+    {
+        return $this->hasOne(ProductImages::class, 'product_id')->where('is_primary', true);
+    }
+
+    // Scope untuk hanya ambil produk aktif
     public function scopeActive($query)
     {
         return $query->where('status', 'active');

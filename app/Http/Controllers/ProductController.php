@@ -10,24 +10,27 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::active()->with(['category', 'productImages']);
-        // Filter by category
-        if ($request->has('category') && $request->category) {
+        $query = Product::active()->with(['category', 'images']);
+
+        // Filter kategori
+        if ($request->filled('category')) {
             $query->where('category_id', $request->category);
         }
 
-        // Filter by badge_type (jika ada kolomnya)
-        if ($request->has('badge') && $request->badge) {
+        // Filter badge_type
+        if ($request->filled('badge')) {
             $query->where('badge_type', $request->badge);
         }
 
-        // Search by name
-        if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%')
-                ->orWhere('deskripsi', 'like', '%' . $request->search . '%');
+        // Pencarian nama / deskripsi
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('deskripsi', 'like', '%' . $request->search . '%');
+            });
         }
 
-        // Sort options
+        // Sorting
         switch ($request->get('sort', 'newest')) {
             case 'price_low':
                 $query->orderBy('harga', 'asc');
@@ -47,32 +50,30 @@ class ProductController extends Controller
         }
 
         $products = $query->paginate(12);
-
         $categories = Category::all();
 
-        // Ganti sesuai view yang kamu pakai
         return view('allProduk', compact('products', 'categories'));
     }
 
     public function show($slug)
     {
+        // 🔑 Pakai firstOrFail biar hasil tunggal, bukan array
         $product = Product::active()
-            ->with(['category', 'productImages'])
+            ->with(['category', 'images'])
             ->where('slug', $slug)
             ->firstOrFail();
 
-        // Related products
+        // Produk terkait
         $relatedProducts = Product::active()
             ->where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
-            ->with(['productImages'])
+            ->with(['images'])
             ->inRandomOrder()
             ->limit(4)
             ->get();
 
         return view('detailproduk', compact('product', 'relatedProducts'));
     }
-
 
     public function featured()
     {
@@ -104,7 +105,7 @@ class ProductController extends Controller
             ->with(['category', 'images'])
             ->where(function ($q) {
                 $q->where('badge_type', 'just-in')
-                    ->orWhere('created_at', '>=', now()->subDays(30));
+                  ->orWhere('created_at', '>=', now()->subDays(30));
             })
             ->orderBy('created_at', 'desc')
             ->paginate(8);
@@ -124,7 +125,7 @@ class ProductController extends Controller
             ->with(['category', 'images'])
             ->where(function ($q) use ($query) {
                 $q->where('name', 'like', '%' . $query . '%')
-                    ->orWhere('deskripsi', 'like', '%' . $query . '%');
+                  ->orWhere('deskripsi', 'like', '%' . $query . '%');
             })
             ->orderBy('total_penjualan', 'desc')
             ->paginate(12);
@@ -132,24 +133,22 @@ class ProductController extends Controller
         return view('products.search', compact('products', 'query'));
     }
 
-    // API
+    // 🔹 API
     public function api_index(Request $request)
     {
         $query = Product::active()->with(['category', 'images']);
 
-        if ($request->has('category')) {
+        if ($request->filled('category')) {
             $query->where('category_id', $request->category);
         }
 
-        if ($request->has('featured')) {
+        if ($request->filled('featured')) {
             $query->featured();
         }
 
-        if ($request->has('limit')) {
-            $products = $query->limit($request->limit)->get();
-        } else {
-            $products = $query->paginate(12);
-        }
+        $products = $request->has('limit')
+            ? $query->limit($request->limit)->get()
+            : $query->paginate(12);
 
         return response()->json([
             'products' => $products->map(function ($product) {
@@ -159,9 +158,9 @@ class ProductController extends Controller
                     'id' => $product->id,
                     'name' => $product->name,
                     'slug' => $product->slug,
-                    'category' => $product->category ? $product->category->name : null,
-                    'price' => $product->formatted_price,
-                    'final_price' => number_format($product->final_price, 0, ',', '.'),
+                    'category' => $product->category?->name,
+                    'price' => $product->formatted_price ?? number_format($product->harga, 0, ',', '.'),
+                    'final_price' => number_format($product->final_price ?? $product->harga_jual, 0, ',', '.'),
                     'image' => $primaryImage ? asset('storage/' . $primaryImage->image_path) : null,
                     'badge' => $product->badge_type ?? null,
                     'is_on_sale' => $product->harga_jual < $product->harga,
@@ -170,11 +169,11 @@ class ProductController extends Controller
                     'url' => route('products.show', $product->slug),
                 ];
             }),
-            'pagination' => [
+            'pagination' => $products instanceof \Illuminate\Pagination\AbstractPaginator ? [
                 'current_page' => $products->currentPage(),
                 'last_page' => $products->lastPage(),
                 'total' => $products->total(),
-            ]
+            ] : null
         ]);
     }
 }

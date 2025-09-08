@@ -88,10 +88,15 @@ class Users extends Authenticatable // HARUS User, bukan Users
 
     public function getGenderLabelAttribute()
     {
-        return match($this->gender) {
+        return match ($this->gender) {
             'male' => 'Laki-laki',
             'female' => 'Perempuan',
             default => 'Tidak diset'
         };
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
     }
 }

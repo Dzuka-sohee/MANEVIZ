@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 <style>
         * {
             margin: 0;
@@ -50,6 +52,23 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+
+        .empty-cart h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .empty-cart a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
         }
 
         .cart-item {
@@ -280,6 +299,12 @@
             transform: translateY(-2px);
         }
 
+        .checkout-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         /* Tablet styles */
         @media (min-width: 768px) {
             .container {
@@ -480,187 +505,315 @@
     <div class="container">
         <div class="cart-content">
             <div class="cart-items">
-                <!-- Shadowtech Eclipse Sneakers -->
-                <div class="cart-item">
-                    <div class="item-checkbox">
-                        <input type="checkbox" checked>
-                    </div>
-                    <div class="item-image">
-                        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=200&h=200&fit=crop&crop=center" alt="Shadowtech Eclipse Sneakers">
-                    </div>
-                    <div class="item-details">
-                        <h3 class="item-name">Shadowtech Eclipse Sneakers</h3>
-                        <div class="item-options">
-                            <div class="option-group">
-                                <div class="option-circle"></div>
-                                <span class="option-text">Black</span>
+                @if($cartItems->count() > 0)
+                    @foreach($cartItems as $item)
+                        <div class="cart-item" data-cart-id="{{ $item->id }}">
+                            <div class="item-checkbox">
+                                <input type="checkbox" class="cart-checkbox" 
+                                       data-cart-id="{{ $item->id }}"
+                                       data-product-id="{{ $item->product->id }}"
+                                       data-price="{{ $item->product->harga_jual ?? $item->product->harga }}" 
+                                       data-quantity="{{ $item->kuantitas }}"
+                                       data-size="{{ $item->size ?? 'M' }}"
+                                       data-color="{{ $item->color ?? '' }}"
+                                       checked>
                             </div>
-                            <div class="option-group">
-                                <span class="option-text">US 8</span>
+                            <div class="item-image">
+                                @if($item->product->images && $item->product->images->isNotEmpty())
+                                    <img src="{{ asset('storage/' . $item->product->images->first()->image_path) }}" alt="{{ $item->product->name }}">
+                                @else
+                                    <img src="{{ asset('images/no-image.png') }}" alt="No Image">
+                                @endif
                             </div>
-                        </div>
-                        <a href="#" class="move-to-favorites">Move to Favorites</a>
-                    </div>
-                    <div class="item-controls">
-                        <button class="remove-btn">&times;</button>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="decreaseQuantity(this)">-</button>
-                            <input type="text" class="quantity-input" value="1" readonly>
-                            <button class="quantity-btn" onclick="increaseQuantity(this)">+</button>
-                        </div>
-                        <div class="item-price">$120.53</div>
-                    </div>
-                </div>
-
-                <!-- Neonoir Vanguard Boots -->
-                <div class="cart-item">
-                    <div class="item-checkbox">
-                        <input type="checkbox">
-                    </div>
-                    <div class="item-image">
-                        <img src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5e?w=200&h=200&fit=crop&crop=center" alt="Neonoir Vanguard Boots">
-                    </div>
-                    <div class="item-details">
-                        <h3 class="item-name">Neonoir Vanguard Boots</h3>
-                        <div class="item-options">
-                            <div class="option-group">
-                                <div class="option-circle"></div>
-                                <span class="option-text">Black</span>
+                            <div class="item-details">
+                                <h3 class="item-name">{{ $item->product->name }}</h3>
+                                <div class="item-options">
+                                    @if($item->color)
+                                        <div class="option-group">
+                                            <div class="option-circle" style="background-color: {{ $item->color === 'Black' ? '#000' : ($item->color === 'White' ? '#fff' : '#6c757d') }}; {{ $item->color === 'White' ? 'border: 2px solid #ddd;' : '' }}"></div>
+                                            <span class="option-text">{{ $item->color }}</span>
+                                        </div>
+                                    @endif
+                                    @if($item->size)
+                                        <div class="option-group">
+                                            <span class="option-text">{{ $item->size }}</span>
+                                        </div>
+                                    @endif
+                                </div>
+                                <a href="#" class="move-to-favorites">Move to Favorites</a>
                             </div>
-                            <div class="option-group">
-                                <span class="option-text">US 8</span>
+                            <div class="item-controls">
+                                <button class="remove-btn" onclick="removeItem({{ $item->id }})">&times;</button>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn" onclick="decreaseQuantity({{ $item->id }})">-</button>
+                                    <input type="text" class="quantity-input" value="{{ $item->kuantitas }}" readonly>
+                                    <button class="quantity-btn" onclick="increaseQuantity({{ $item->id }})">+</button>
+                                </div>
+                                <div class="item-price">IDR {{ number_format(($item->product->harga_jual ?? $item->product->harga) * $item->kuantitas, 0, ',', '.') }}</div>
                             </div>
                         </div>
-                        <a href="#" class="move-to-favorites">Move to Favorites</a>
+                    @endforeach
+                @else
+                    <div class="empty-cart">
+                        <h3>Keranjang Belanja Kosong</h3>
+                        <p>Belum ada produk di keranjang Anda.</p>
+                        <a href="{{ route('products.index') }}">Mulai Belanja Sekarang</a>
                     </div>
-                    <div class="item-controls">
-                        <button class="remove-btn">&times;</button>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="decreaseQuantity(this)">-</button>
-                            <input type="text" class="quantity-input" value="1" readonly>
-                            <button class="quantity-btn" onclick="increaseQuantity(this)">+</button>
-                        </div>
-                        <div class="item-price">$210.14</div>
-                    </div>
-                </div>
-
-                <!-- Cybergoth Stealth Kicks -->
-                <div class="cart-item">
-                    <div class="item-checkbox">
-                        <input type="checkbox">
-                    </div>
-                    <div class="item-image">
-                        <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=200&h=200&fit=crop&crop=center" alt="Cybergoth Stealth Kicks">
-                    </div>
-                    <div class="item-details">
-                        <h3 class="item-name">Cybergoth Stealth Kicks</h3>
-                        <div class="item-options">
-                            <div class="option-group">
-                                <div class="option-circle"></div>
-                                <span class="option-text">Black</span>
-                            </div>
-                            <div class="option-group">
-                                <span class="option-text">US 8</span>
-                            </div>
-                        </div>
-                        <a href="#" class="move-to-favorites">Move to Favorites</a>
-                    </div>
-                    <div class="item-controls">
-                        <button class="remove-btn">&times;</button>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="decreaseQuantity(this)">-</button>
-                            <input type="text" class="quantity-input" value="1" readonly>
-                            <button class="quantity-btn" onclick="increaseQuantity(this)">+</button>
-                        </div>
-                        <div class="item-price">$154.32</div>
-                    </div>
-                </div>
+                @endif
             </div>
 
-            <div class="order-summary">
-                <h3 class="summary-title">Order Summary</h3>
-                <div class="summary-row">
-                    <span>Subtotal</span>
-                    <span id="subtotal">$120.53</span>
+            @if($cartItems->count() > 0)
+                <div class="order-summary">
+                    <h3 class="summary-title">Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">IDR 0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (2.5%)</span>
+                        <span id="tax">IDR 0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="total">IDR 0</span>
+                    </div>
+                    
+                    <!-- Form untuk checkout -->
+                    <form id="checkoutForm" action="{{ route('checkout.index') }}" method="GET" style="display: none;">
+                        <!-- Data akan diisi via JavaScript -->
+                    </form>
+                    
+                    <button class="checkout-btn" id="checkoutBtn" onclick="proceedToCheckout()">Checkout</button>
                 </div>
-                <div class="summary-row">
-                    <span>Tax</span>
-                    <span id="tax">$3</span>
-                </div>
-                <div class="summary-row total">
-                    <span>Total</span>
-                    <span id="total">$123.53</span>
-                </div>
-                <button class="checkout-btn">Checkout</button>
-            </div>
+            @endif
         </div>
     </div>
 
     <script>
-        function increaseQuantity(btn) {
-            const input = btn.previousElementSibling;
-            const currentValue = parseInt(input.value);
-            input.value = currentValue + 1;
-            updateItemTotal(btn);
+        function increaseQuantity(cartId) {
+            const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
+            const quantityInput = cartItem.querySelector('.quantity-input');
+            const currentValue = parseInt(quantityInput.value);
+            
+            updateQuantity(cartId, currentValue + 1);
         }
 
-        function decreaseQuantity(btn) {
-            const input = btn.nextElementSibling;
-            const currentValue = parseInt(input.value);
+        function decreaseQuantity(cartId) {
+            const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
+            const quantityInput = cartItem.querySelector('.quantity-input');
+            const currentValue = parseInt(quantityInput.value);
+            
             if (currentValue > 1) {
-                input.value = currentValue - 1;
-                updateItemTotal(btn);
+                updateQuantity(cartId, currentValue - 1);
             }
         }
 
-        function updateItemTotal(btn) {
-            const cartItem = btn.closest('.cart-item');
-            const quantity = parseInt(cartItem.querySelector('.quantity-input').value);
-            const priceElement = cartItem.querySelector('.item-price');
-            const priceText = priceElement.textContent;
-            
-            // Extract base price (divide current price by current quantity to get unit price)
-            const currentQuantity = quantity - (btn.textContent === '+' ? 1 : -1);
-            const currentPrice = parseFloat(priceText.replace('$', ''));
-            const unitPrice = currentQuantity > 0 ? currentPrice / currentQuantity : currentPrice;
-            
-            // Calculate new total
-            const newTotal = (unitPrice * quantity).toFixed(2);
-            priceElement.textContent = `$${newTotal}`;
+        function updateQuantity(cartId, newQuantity) {
+            fetch(`/cart/update/${cartId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    kuantitas: newQuantity
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const cartItem = document.querySelector(`[data-cart-id="${cartId}"]`);
+                    const quantityInput = cartItem.querySelector('.quantity-input');
+                    const priceElement = cartItem.querySelector('.item-price');
+                    const checkbox = cartItem.querySelector('.cart-checkbox');
+                    
+                    quantityInput.value = newQuantity;
+                    priceElement.textContent = `IDR ${data.new_total.toLocaleString('id-ID')}`;
+                    checkbox.setAttribute('data-quantity', newQuantity);
+                    
+                    updateOrderSummary();
+                    showNotification('success', data.message);
+                } else {
+                    showNotification('error', data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('error', 'Terjadi kesalahan saat mengupdate kuantitas');
+            });
+        }
 
-            updateOrderSummary();
+        function removeItem(cartId) {
+            if (confirm('Yakin ingin menghapus item ini dari keranjang?')) {
+                fetch(`/cart/remove/${cartId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.querySelector(`[data-cart-id="${cartId}"]`).remove();
+                        updateOrderSummary();
+                        showNotification('success', data.message);
+                        
+                        // Check if cart is empty
+                        if (document.querySelectorAll('.cart-item').length === 0) {
+                            location.reload();
+                        }
+                    } else {
+                        showNotification('error', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showNotification('error', 'Terjadi kesalahan saat menghapus item');
+                });
+            }
         }
 
         function updateOrderSummary() {
-            const checkedItems = document.querySelectorAll('.item-checkbox input:checked');
+            const checkedItems = document.querySelectorAll('.cart-checkbox:checked');
+            const checkoutBtn = document.getElementById('checkoutBtn');
             let subtotal = 0;
 
             checkedItems.forEach(checkbox => {
-                const cartItem = checkbox.closest('.cart-item');
-                const priceText = cartItem.querySelector('.item-price').textContent;
-                const price = parseFloat(priceText.replace('$', ''));
-                subtotal += price;
+                const price = parseFloat(checkbox.getAttribute('data-price'));
+                const quantity = parseInt(checkbox.getAttribute('data-quantity'));
+                subtotal += price * quantity;
             });
 
             const tax = subtotal * 0.025;
             const total = subtotal + tax;
 
-            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
-            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+            document.getElementById('subtotal').textContent = `IDR ${subtotal.toLocaleString('id-ID')}`;
+            document.getElementById('tax').textContent = `IDR ${Math.round(tax).toLocaleString('id-ID')}`;
+            document.getElementById('total').textContent = `IDR ${Math.round(total).toLocaleString('id-ID')}`;
+
+            // Enable/disable checkout button
+            if (checkedItems.length === 0) {
+                checkoutBtn.disabled = true;
+                checkoutBtn.textContent = 'Pilih Item untuk Checkout';
+            } else {
+                checkoutBtn.disabled = false;
+                checkoutBtn.textContent = `Checkout (${checkedItems.length} Item${checkedItems.length > 1 ? 's' : ''})`;
+            }
+        }
+
+        function proceedToCheckout() {
+            const checkedItems = document.querySelectorAll('.cart-checkbox:checked');
+            
+            if (checkedItems.length === 0) {
+                showNotification('error', 'Pilih minimal satu item untuk checkout');
+                return;
+            }
+
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            checkoutBtn.disabled = true;
+            checkoutBtn.textContent = 'Processing...';
+
+            // Create form data for checkout
+            const checkoutData = [];
+            let totalAmount = 0;
+
+            checkedItems.forEach(checkbox => {
+                const productId = checkbox.getAttribute('data-product-id');
+                const quantity = parseInt(checkbox.getAttribute('data-quantity'));
+                const price = parseFloat(checkbox.getAttribute('data-price'));
+                const size = checkbox.getAttribute('data-size');
+                const color = checkbox.getAttribute('data-color');
+
+                checkoutData.push({
+                    product_id: productId,
+                    quantity: quantity,
+                    size: size,
+                    color: color
+                });
+
+                totalAmount += price * quantity;
+            });
+
+            // Create form and submit
+            const form = document.createElement('form');
+            form.method = 'GET';
+            form.action = '{{ route("checkout.index") }}';
+            
+            // Add CSRF token
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = '_token';
+            csrfInput.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            form.appendChild(csrfInput);
+
+            // Add checkout data
+            checkoutData.forEach((item, index) => {
+                Object.keys(item).forEach(key => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = `items[${index}][${key}]`;
+                    input.value = item[key];
+                    form.appendChild(input);
+                });
+            });
+
+            // Add total amount
+            const totalInput = document.createElement('input');
+            totalInput.type = 'hidden';
+            totalInput.name = 'total_amount';
+            totalInput.value = totalAmount;
+            form.appendChild(totalInput);
+
+            // Add source
+            const sourceInput = document.createElement('input');
+            sourceInput.type = 'hidden';
+            sourceInput.name = 'source';
+            sourceInput.value = 'cart';
+            form.appendChild(sourceInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        function showNotification(type, message) {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 8px;
+                color: white;
+                z-index: 10000;
+                font-weight: 500;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+                max-width: 350px;
+                ${type === 'success' ? 'background: #28a745;' : 'background: #dc3545;'}
+            `;
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
         }
 
         // Add event listeners for checkboxes
-        document.querySelectorAll('.item-checkbox input').forEach(checkbox => {
+        document.querySelectorAll('.cart-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', updateOrderSummary);
-        });
-
-        // Add event listeners for remove buttons
-        document.querySelectorAll('.remove-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.closest('.cart-item').remove();
-                updateOrderSummary();
-            });
         });
 
         // Initialize order summary
