@@ -207,8 +207,7 @@
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
-        background-attachment: fixed;
-        display: flex;
+         display: flex;
         align-items: center;
         justify-content: flex-start;
         position: relative;

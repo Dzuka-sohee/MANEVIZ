@@ -769,7 +769,7 @@
 
             .logo img {
                 height: 70px;
-                padding-left: 33px;
+                padding-left: 53px;
             }
 
             .mobile-menu-toggle {

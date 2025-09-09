@@ -299,12 +299,6 @@
             transform: translateY(-2px);
         }
 
-        .checkout-btn:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
         /* Tablet styles */
         @media (min-width: 768px) {
             .container {
@@ -509,14 +503,7 @@
                     @foreach($cartItems as $item)
                         <div class="cart-item" data-cart-id="{{ $item->id }}">
                             <div class="item-checkbox">
-                                <input type="checkbox" class="cart-checkbox" 
-                                       data-cart-id="{{ $item->id }}"
-                                       data-product-id="{{ $item->product->id }}"
-                                       data-price="{{ $item->product->harga_jual ?? $item->product->harga }}" 
-                                       data-quantity="{{ $item->kuantitas }}"
-                                       data-size="{{ $item->size ?? 'M' }}"
-                                       data-color="{{ $item->color ?? '' }}"
-                                       checked>
+                                <input type="checkbox" class="cart-checkbox" data-price="{{ $item->product->harga_jual ?? $item->product->harga }}" data-quantity="{{ $item->kuantitas }}" checked>
                             </div>
                             <div class="item-image">
                                 @if($item->product->images && $item->product->images->isNotEmpty())
@@ -577,13 +564,7 @@
                         <span>Total</span>
                         <span id="total">IDR 0</span>
                     </div>
-                    
-                    <!-- Form untuk checkout -->
-                    <form id="checkoutForm" action="{{ route('checkout.index') }}" method="GET" style="display: none;">
-                        <!-- Data akan diisi via JavaScript -->
-                    </form>
-                    
-                    <button class="checkout-btn" id="checkoutBtn" onclick="proceedToCheckout()">Checkout</button>
+                    <button class="checkout-btn" onclick="proceedToCheckout()">Checkout</button>
                 </div>
             @endif
         </div>
@@ -675,7 +656,6 @@
 
         function updateOrderSummary() {
             const checkedItems = document.querySelectorAll('.cart-checkbox:checked');
-            const checkoutBtn = document.getElementById('checkoutBtn');
             let subtotal = 0;
 
             checkedItems.forEach(checkbox => {
@@ -690,15 +670,6 @@
             document.getElementById('subtotal').textContent = `IDR ${subtotal.toLocaleString('id-ID')}`;
             document.getElementById('tax').textContent = `IDR ${Math.round(tax).toLocaleString('id-ID')}`;
             document.getElementById('total').textContent = `IDR ${Math.round(total).toLocaleString('id-ID')}`;
-
-            // Enable/disable checkout button
-            if (checkedItems.length === 0) {
-                checkoutBtn.disabled = true;
-                checkoutBtn.textContent = 'Pilih Item untuk Checkout';
-            } else {
-                checkoutBtn.disabled = false;
-                checkoutBtn.textContent = `Checkout (${checkedItems.length} Item${checkedItems.length > 1 ? 's' : ''})`;
-            }
         }
 
         function proceedToCheckout() {
@@ -709,70 +680,13 @@
                 return;
             }
 
-            const checkoutBtn = document.getElementById('checkoutBtn');
-            checkoutBtn.disabled = true;
-            checkoutBtn.textContent = 'Processing...';
-
-            // Create form data for checkout
-            const checkoutData = [];
-            let totalAmount = 0;
-
-            checkedItems.forEach(checkbox => {
-                const productId = checkbox.getAttribute('data-product-id');
-                const quantity = parseInt(checkbox.getAttribute('data-quantity'));
-                const price = parseFloat(checkbox.getAttribute('data-price'));
-                const size = checkbox.getAttribute('data-size');
-                const color = checkbox.getAttribute('data-color');
-
-                checkoutData.push({
-                    product_id: productId,
-                    quantity: quantity,
-                    size: size,
-                    color: color
-                });
-
-                totalAmount += price * quantity;
+            // Collect selected item IDs
+            const selectedItemIds = Array.from(checkedItems).map(checkbox => {
+                return checkbox.closest('.cart-item').getAttribute('data-cart-id');
             });
 
-            // Create form and submit
-            const form = document.createElement('form');
-            form.method = 'GET';
-            form.action = '{{ route("checkout.index") }}';
-            
-            // Add CSRF token
-            const csrfInput = document.createElement('input');
-            csrfInput.type = 'hidden';
-            csrfInput.name = '_token';
-            csrfInput.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            form.appendChild(csrfInput);
-
-            // Add checkout data
-            checkoutData.forEach((item, index) => {
-                Object.keys(item).forEach(key => {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = `items[${index}][${key}]`;
-                    input.value = item[key];
-                    form.appendChild(input);
-                });
-            });
-
-            // Add total amount
-            const totalInput = document.createElement('input');
-            totalInput.type = 'hidden';
-            totalInput.name = 'total_amount';
-            totalInput.value = totalAmount;
-            form.appendChild(totalInput);
-
-            // Add source
-            const sourceInput = document.createElement('input');
-            sourceInput.type = 'hidden';
-            sourceInput.name = 'source';
-            sourceInput.value = 'cart';
-            form.appendChild(sourceInput);
-
-            document.body.appendChild(form);
-            form.submit();
+            // Redirect to checkout with selected items
+            window.location.href = `/checkout?items=${selectedItemIds.join(',')}`;
         }
 
         function showNotification(type, message) {

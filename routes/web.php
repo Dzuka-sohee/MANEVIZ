@@ -52,19 +52,18 @@ Route::middleware('auth')->group(function () {
     Route::view('/wishlist', 'wishlist')->name('wishlist');
     Route::view('/orders', 'orders')->name('orders');
     Route::view('/settings', 'settings')->name('settings');
+    Route::get('/orders/{order}', [CheckoutController::class, 'show'])->name('orders.show');
     
     // ✅ Cart Routes
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
     Route::put('/cart/update/{id}', [CartController::class, 'updateQuantity'])->name('cart.update');
     Route::delete('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.remove');
-    Route::delete('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
-    Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
-
-    // ✅ Checkout Routes (BARU DITAMBAHKAN)
+    
+    // Checkout routes  
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
-    Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/checkout/success/{order}', [CheckoutController::class, 'success'])->name('checkout.success');
 });
 
 // =====================

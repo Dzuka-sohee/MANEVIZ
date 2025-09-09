@@ -13,7 +13,10 @@ class Order extends Model
         'user_id',
         'order_number',
         'status',
-        'total_amount',
+        'subtotal',          // Diperlukan - dari database
+        'tax',               // Kemungkinan ada
+        'total',             // Kemungkinan ada
+        'total_amount',      // Kolom existing
         'shipping_cost',
         'grand_total',
         'payment_method',
@@ -23,7 +26,15 @@ class Order extends Model
         'shipping_email',
         'shipping_address',
         'shipping_city',
+        'shipping_province',
         'shipping_postal_code',
+        'billing_name',
+        'billing_phone',
+        'billing_email', 
+        'billing_address',
+        'billing_city',
+        'billing_province',
+        'billing_postal_code',
         'notes',
         'order_date',
         'shipped_date',
@@ -36,6 +47,30 @@ class Order extends Model
         'delivered_date' => 'datetime',
     ];
 
+    // TAMBAHKAN METHOD INI
+    public static function generateOrderNumber()
+    {
+        $prefix = 'ORD';
+        $date = now()->format('Ymd');
+        
+        // Cari order terakhir hari ini
+        $lastOrder = self::where('order_number', 'like', $prefix . $date . '%')
+                        ->orderBy('order_number', 'desc')
+                        ->first();
+        
+        if ($lastOrder) {
+            // Ambil 4 digit terakhir dan tambah 1
+            $lastNumber = intval(substr($lastOrder->order_number, -4));
+            $newNumber = $lastNumber + 1;
+        } else {
+            // Jika belum ada order hari ini, mulai dari 1
+            $newNumber = 1;
+        }
+        
+        // Format: ORD20250908001, ORD20250908002, dst.
+        return $prefix . $date . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+    }
+
     // Relationships
     public function user()
     {
@@ -43,6 +78,12 @@ class Order extends Model
     }
 
     public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    // Tambahkan relasi items juga (yang dipanggil di controller)
+    public function items()
     {
         return $this->hasMany(OrderItem::class);
     }
@@ -76,8 +117,9 @@ class Order extends Model
     {
         $labels = [
             'bank_transfer' => 'Transfer Bank',
-            'cod' => 'Cash on Delivery (COD)',
+            'credit_card' => 'Kartu Kredit',   // Tambahkan ini
             'ewallet' => 'E-Wallet',
+            'cod' => 'Cash on Delivery (COD)',
         ];
 
         return $labels[$this->payment_method] ?? 'Unknown';

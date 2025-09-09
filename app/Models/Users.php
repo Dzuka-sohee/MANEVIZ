@@ -99,4 +99,9 @@ class Users extends Authenticatable // HARUS User, bukan Users
     {
         return $this->hasMany(Cart::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->decimal('total_amount', 12, 2);
             $table->decimal('shipping_cost', 10, 2)->default(0);
             $table->decimal('grand_total', 12, 2);
-            $table->enum('payment_method', ['bank_transfer', 'cod', 'ewallet']);
+            $table->enum('payment_method', ['bank_transfer', 'credit_card', 'ewallet', 'cod'])->default('bank_transfer');
             $table->enum('payment_status', ['pending', 'paid', 'failed'])->default('pending');
             
             // Shipping Information
