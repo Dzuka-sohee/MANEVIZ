@@ -205,9 +205,13 @@
         height: 100vh;
         background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('image/bannerfiks.jpeg');
         background-size: cover;
+<<<<<<< HEAD
         background-position: center center;
         background-repeat: no-repeat;
          display: flex;
+=======
+        display: flex;
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         align-items: center;
         justify-content: flex-start;
         position: relative;

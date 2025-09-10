@@ -26,20 +26,35 @@
             display: flex;
             align-items: center;
             justify-content: center;
+<<<<<<< HEAD
             padding: 20px 15px;
         }
 
+=======
+            padding: 40px 20px;
+        }
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .login-container {
             display: flex;
             max-width: 1200px;
             width: 100%;
+<<<<<<< HEAD
             min-height: 500px;
+=======
+            min-height: 400px; /* Kurangi lagi tinggi minimum */
+            height: auto; /* Biarkan tinggi menyesuaikan konten */
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
             background: #fff;
             border-radius: 24px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             overflow: hidden;
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         /* Left Side - Image */
         .image-section {
             flex: 1;
@@ -50,9 +65,15 @@
             justify-content: center;
             overflow: hidden;
             border-radius: 24px 0 0 24px;
+<<<<<<< HEAD
             min-height: 500px;
         }
 
+=======
+            min-height: 400px; /* Kurangi lagi tinggi minimum */
+        }
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .image-container {
             width: 100%;
             height: 100%;
@@ -61,16 +82,29 @@
             background-repeat: no-repeat;
             position: relative;
         }
+<<<<<<< HEAD
 
         .image-placeholder {
             width: 100%;
             height: 100%;
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect width="400" height="600" fill="%23667eea"/><text x="200" y="280" text-anchor="middle" fill="%23fff" font-size="24" font-family="Arial" font-weight="bold">MANEVIZ</text><text x="200" y="320" text-anchor="middle" fill="%23fff" font-size="16" font-family="Arial">Management Visualization</text></svg>') center/cover;
+=======
+        
+        /* Placeholder untuk foto yang akan Anda masukkan */
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect width="400" height="600" fill="%23f8f9fa"/><text x="200" y="300" text-anchor="middle" fill="%23666" font-size="16" font-family="Arial">Tempatkan foto Anda di sini</text></svg>') center/cover;
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
             display: flex;
             align-items: center;
             justify-content: center;
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         /* Right Side - Form */
         .form-section {
             flex: 1;
@@ -78,15 +112,24 @@
             display: flex;
             align-items: center;
             justify-content: center;
+<<<<<<< HEAD
             padding: 40px;
             border-radius: 0 24px 24px 0;
             min-height: 500px;
         }
 
+=======
+            padding: 25px 40px; /* Kurangi lagi padding atas-bawah */
+            border-radius: 0 24px 24px 0;
+            min-height: 400px; /* Kurangi lagi tinggi minimum */
+        }
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .form-container {
             width: 100%;
             max-width: 400px;
         }
+<<<<<<< HEAD
 
         .logo-container {
             text-align: center;
@@ -95,6 +138,16 @@
 
         .logo {
             font-size: 28px;
+=======
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 15px; /* Kurangi lagi margin */
+        }
+        
+        .logo {
+            font-size: 28px; /* Kecilkan logo */
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
             font-weight: 800;
             color: #000;
             letter-spacing: -1px;
@@ -103,9 +156,15 @@
             justify-content: center;
             gap: 8px;
         }
+<<<<<<< HEAD
 
         .logo-icon {
             width: 36px;
+=======
+        
+        .logo-icon {
+            width: 36px; /* Kecilkan icon */
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
             height: 36px;
             background: #000;
             border-radius: 50%;
@@ -115,6 +174,7 @@
             color: white;
             font-size: 18px;
         }
+<<<<<<< HEAD
 
         .welcome-title {
             font-size: 28px;
@@ -135,6 +195,28 @@
             margin-bottom: 16px;
         }
 
+=======
+        
+        .welcome-title {
+            font-size: 28px; /* Kecilkan title */
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 6px; /* Kurangi margin */
+            text-align: left;
+        }
+        
+        .welcome-subtitle {
+            color: #666;
+            font-size: 14px; /* Kecilkan font */
+            margin-bottom: 16px; /* Kurangi lagi margin */
+            text-align: left;
+        }
+        
+        .form-group {
+            margin-bottom: 12px; /* Kurangi lagi spacing antar field */
+        }
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .form-label {
             display: block;
             margin-bottom: 8px;
@@ -142,32 +224,52 @@
             font-weight: 500;
             font-size: 14px;
         }
+<<<<<<< HEAD
 
         .form-control {
             width: 100%;
             padding: 12px 16px;
+=======
+        
+        .form-control {
+            width: 100%;
+            padding: 12px; /* Kurangi padding input */
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
             border: 2px solid #e5e7eb;
             border-radius: 12px;
             font-size: 16px;
             transition: all 0.2s ease;
             background-color: #fff;
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .form-control:focus {
             outline: none;
             border-color: #000;
             box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
         }
+<<<<<<< HEAD
 
         .form-control.is-invalid {
             border-color: #ef4444;
         }
 
+=======
+        
+        .form-control.is-invalid {
+            border-color: #ef4444;
+        }
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .btn-signin {
             width: 100%;
             background-color: #000;
             color: #fff;
             border: none;
+<<<<<<< HEAD
             padding: 14px;
             border-radius: 12px;
             font-weight: 600;
@@ -178,10 +280,23 @@
             cursor: pointer;
         }
 
+=======
+            padding: 12px; /* Kurangi padding button */
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 6px;
+            margin-bottom: 12px; /* Kurangi lagi margin */
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .btn-signin:hover {
             background-color: #1f2937;
             transform: translateY(-1px);
         }
+<<<<<<< HEAD
 
         .divider {
             display: flex;
@@ -189,6 +304,15 @@
             margin: 16px 0;
         }
 
+=======
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 10px 0; /* Kurangi lagi margin */
+        }
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .divider::before,
         .divider::after {
             content: '';
@@ -196,33 +320,55 @@
             height: 1px;
             background: #e5e7eb;
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .divider-text {
             padding: 0 16px;
             color: #9ca3af;
             font-size: 14px;
             font-weight: 500;
         }
+<<<<<<< HEAD
 
         .btn-google {
             width: 100%;
             height: 48px;
+=======
+        
+        .btn-google {
+            width: 100%;
+            height: 42px; /* Kurangi tinggi button */
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
             border: 2px solid #e5e7eb;
             border-radius: 12px;
             background-color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
+<<<<<<< HEAD
             margin-bottom: 16px;
             transition: all 0.2s ease;
             text-decoration: none;
             font-size: 14px;
+=======
+            margin-bottom: 12px; /* Kurangi lagi margin */
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-size: 14px; /* Kecilkan font */
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
             font-weight: 500;
             color: #374151;
             gap: 12px;
             cursor: pointer;
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .btn-google:hover {
             border-color: #d1d5db;
             background-color: #f9fafb;
@@ -230,6 +376,7 @@
             text-decoration: none;
             transform: translateY(-1px);
         }
+<<<<<<< HEAD
 
         .signup-link {
             color: #6b7280;
@@ -238,32 +385,58 @@
             margin-top: 8px;
         }
 
+=======
+        
+        .signup-link {
+            color: #6b7280;
+            font-size: 14px; /* Kecilkan font */
+            text-align: center;
+        }
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .signup-link a {
             color: #ef4444;
             text-decoration: none;
             font-weight: 600;
         }
+<<<<<<< HEAD
 
         .signup-link a:hover {
             text-decoration: underline;
         }
 
+=======
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .alert {
             margin-bottom: 24px;
             border-radius: 12px;
             border: none;
             padding: 16px;
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .alert-success {
             background-color: #f0fdf4;
             color: #166534;
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         .alert-danger {
             background-color: #fef2f2;
             color: #dc2626;
         }
+<<<<<<< HEAD
 
         .invalid-feedback {
             font-size: 12px;
@@ -735,10 +908,88 @@
                 min-height: auto;
             }
 
+=======
+        
+        .text-danger {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #ef4444;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+                align-items: flex-start; /* Ubah dari center ke flex-start */
+                padding-top: 30px; /* Tambah padding atas */
+            }
+            
+            .login-container {
+                flex-direction: column;
+                height: auto;
+                min-height: auto; /* Hilangkan min-height di mobile */
+                max-width: 400px;
+            }
+            
+            .image-section {
+                display: none;
+            }
+            
+            .form-section {
+                padding: 40px 30px;
+                border-radius: 24px;
+                min-height: auto; /* Hilangkan min-height di mobile */
+            }
+            
+            .welcome-title {
+                font-size: 28px;
+                text-align: center;
+            }
+            
+            .welcome-subtitle {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 5px;
+                padding-top: 20px; /* Kurangi padding atas di layar kecil */
+            }
+            
+            .login-container {
+                margin: 0;
+                border-radius: 16px;
+            }
+            
+            .form-section {
+                padding: 30px 20px;
+                border-radius: 16px;
+            }
+            
+            .form-container {
+                max-width: 100%;
+            }
+        }
+
+        /* Tambahan untuk memastikan tidak ada overflow */
+        @media (max-height: 700px) {
+            body {
+                align-items: flex-start;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            
+            .login-container {
+                min-height: auto;
+            }
+            
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
             .image-section,
             .form-section {
                 min-height: auto;
             }
+<<<<<<< HEAD
 
             .form-section {
                 padding: 25px 30px;
@@ -900,6 +1151,8 @@
             .btn-google {
                 border-width: 3px;
             }
+=======
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
         }
     </style>
 </head>
@@ -910,8 +1163,13 @@
             <div class="image-container">
                 <!-- Ganti dengan foto Anda -->
                 <div class="image-placeholder">
+<<<<<<< HEAD
                     <!-- Uncomment jika ada gambar -->
                     <img src="{{ asset('image/login-banner.jpg') }}" alt="MANEVIZ" style="width: 100%; height: 100%; object-fit: cover;">
+=======
+                    <!-- Tempatkan <img> tag Anda di sini -->
+                    <img src="storage/image/login-banner.jpg" alt="MANEVIZ" style="width: 100%; height: 100%; object-fit: cover;">
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
                 </div>
             </div>
         </div>
@@ -925,6 +1183,7 @@
                         <div class="logo-icon">🦁</div>
                         MANEVIZ
                     </div>
+<<<<<<< HEAD
                 </div>
 
                 <!-- Welcome Text -->
@@ -958,14 +1217,41 @@
                     </div>
                 @endif
 
+=======
+                </div>
+                
+                <!-- Welcome Text -->
+                <h1 class="welcome-title">Welcome Back!</h1>
+                <p class="welcome-subtitle">Enter your data</p>
+
+                <!-- Alerts -->
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
+                    <ul class="mb-0 list-unstyled">
+                        <li>Please fill out this field.</li>
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                </div>
+
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
                 <!-- Login Form -->
-                <form method="POST" action="{{ route('signIn') }}">
-                    @csrf
+                <form method="POST" action="#" onsubmit="return false;">
+                    <!-- Username Field -->
+                    <div class="form-group">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text"
+                               class="form-control"
+                               id="username"
+                               name="username"
+                               value="firman7@gmail.com"
+                               placeholder="Enter your username"
+                               required autofocus>
+                    </div>
 
                     <!-- Email Field -->
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
                         <input type="email"
+<<<<<<< HEAD
                                class="form-control @error('email') is-invalid @enderror"
                                id="email"
                                name="email"
@@ -975,12 +1261,22 @@
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+=======
+                               class="form-control"
+                               id="email"
+                               name="email"
+                               value=""
+                               placeholder="Enter your email address"
+                               required>
+                        <small class="text-danger">Please fill out this field.</small>
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
                     </div>
 
                     <!-- Password Field -->
                     <div class="form-group">
                         <label for="password" class="form-label">Password</label>
                         <input type="password"
+<<<<<<< HEAD
                                class="form-control @error('password') is-invalid @enderror"
                                id="password"
                                name="password"
@@ -1001,6 +1297,16 @@
                         </div>
                     </div>
 
+=======
+                               class="form-control"
+                               id="password"
+                               name="password"
+                               value="••••••"
+                               placeholder="Enter your password"
+                               required>
+                    </div>
+
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
                     <!-- Submit Button -->
                     <button type="submit" class="btn-signin">
                         Sign In
@@ -1013,14 +1319,22 @@
                 </div>
 
                 <!-- Google Login -->
+<<<<<<< HEAD
                 <a href="{{ route('login.google') }}" class="btn-google">
+=======
+                <a href="#" class="btn-google">
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
                     <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="20" height="20">
                     Google
                 </a>
 
                 <!-- Sign Up Link -->
                 <p class="signup-link">
+<<<<<<< HEAD
                     Don't have an account? <a href="{{ route('signUp') }}">Sign Up</a>
+=======
+                    Don't have an account? <a href={{ url('signUp') }}>Sign Up</a>
+>>>>>>> e8edcfba74441875a6c4a30efdb1ee55df5e141c
                 </p>
             </div>
         </div>
