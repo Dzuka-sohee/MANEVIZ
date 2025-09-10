@@ -139,7 +139,7 @@ class CheckoutController extends Controller
                     'product_id' => $item->product_id,
                     'product_name' => $item->product->name,
                     'product_price' => $productPrice,
-                    'quantity' => $item->kuantitas,
+                    'kuantitas' => $item->kuantitas,
                     'size' => $item->size,
                     'subtotal' => $productPrice * $item->kuantitas,  // Gunakan subtotal bukan total
                 ]);
