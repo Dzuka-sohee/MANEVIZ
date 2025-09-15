@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css">
     <title>MANEVIZ</title>
     <style>
@@ -1175,7 +1176,7 @@
                 <li><a class="nav-link" href="/contact">Contact</a></li>
             </ul>
 
-            <img src="image/maneviz.png" alt="MANEVIZ Logo" class="logo">
+            <img src="../image/maneviz.png" alt="MANEVIZ Logo" class="logo">
 
             <div class="mobile-search-icon" onclick="toggleMobileSearchBar()">
                 <i class="bi bi-search"></i>
@@ -1205,10 +1206,10 @@
                             <a href="{{ url('/profil') }}" class="dropdown-item">
                                 <i class="bi bi-person me-2"></i> Profile
                             </a>
-                            <a href="{{ url('/orders') }}" class="dropdown-item">
+                            <a href="{{ route('orders.index') }}" class="dropdown-item">
                                 <i class="bi bi-bag-check"></i> Pesanan
                             </a>
-                            <a href="{{ url('/settings') }}" class="dropdown-item">
+                            <a href="{{ url('/order-history.index') }}" class="dropdown-item">
                                 <i class="bi bi-clock-history"></i> Riwayat Pesanan
                             </a>
                             <form method="POST" action="{{ route('logout') }}" style="margin: 0;">

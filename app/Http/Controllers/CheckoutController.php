@@ -6,12 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Services\MidtransService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
+    protected $midtransService;
+
+    public function __construct(MidtransService $midtransService)
+    {
+        $this->midtransService = $midtransService;
+        $this->middleware('auth');
+    }
+
     // Menampilkan halaman checkout
     public function index(Request $request)
     {
@@ -37,18 +46,18 @@ class CheckoutController extends Controller
 
         // Calculate totals
         $subtotal = $selectedItems->sum(function ($item) {
-            return ($item->product->harga_jual ?? $item->product->harga) * $item->kuantitas * 1000;
+            return ($item->product->harga_jual ?? $item->product->harga) * $item->kuantitas;
         });
 
         $tax = $subtotal * 0.025; // 2.5%
-        $shipping = 15000; // IDR 15,000 flat shipping
+        $shipping = 15; // IDR 15,000 flat shipping
         $total = $subtotal + $tax + $shipping;
 
         return view('checkout', compact('selectedItems', 'subtotal', 'tax', 'shipping', 'total'));
     }
 
-    // Process checkout
-    public function store(Request $request)
+    // Create Midtrans payment token
+    public function createPayment(Request $request)
     {
         $request->validate([
             'items' => 'required|string',
@@ -59,7 +68,6 @@ class CheckoutController extends Controller
             'shipping_city' => 'required|string|max:255',
             'shipping_province' => 'required|string|max:255',
             'shipping_postal_code' => 'required|string|max:10',
-            'payment_method' => 'required|string|in:bank_transfer,credit_card,ewallet,cod',
             'notes' => 'nullable|string|max:500',
             'same_as_shipping' => 'nullable|boolean',
         ]);
@@ -76,8 +84,6 @@ class CheckoutController extends Controller
                 'billing_postal_code' => 'required|string|max:10',
             ]);
         }
-
-        DB::beginTransaction();
 
         try {
             // Get selected cart items
@@ -104,29 +110,145 @@ class CheckoutController extends Controller
             });
 
             $tax = $subtotal * 0.025;
-            $shippingCost = 15000;
+            $shippingCost = 15;
             $grandTotal = $subtotal + $tax + $shippingCost;
 
-            // Create order - DISESUAIKAN DENGAN DATABASE EXISTING
-            $order = Order::create([
-                'order_number' => Order::generateOrderNumber(),
+            // Create temporary order data for Midtrans
+            $orderNumber = 'TEMP-' . time() . '-' . Auth::id();
+            
+            // Create order data for payment
+            $orderData = [
+                'order_number' => $orderNumber,
                 'user_id' => Auth::id(),
-                'status' => 'pending',
-                'subtotal' => $subtotal,            // Tambah ini - required
-                'tax' => $tax,                      // Tambah ini jika ada kolom tax
-                'total' => $grandTotal,             // Tambah ini jika ada kolom total
-                'total_amount' => $subtotal,        
-                'shipping_cost' => $shippingCost,     
-                'grand_total' => $grandTotal,       
-                'shipping_name' => $request->shipping_name,
-                'shipping_email' => $request->shipping_email,
-                'shipping_phone' => $request->shipping_phone,
-                'shipping_address' => $request->shipping_address,
-                'shipping_city' => $request->shipping_city,
-                'shipping_postal_code' => $request->shipping_postal_code,
-                'payment_method' => $request->payment_method,
-                'payment_status' => 'pending',
+                'total' => $grandTotal,
+                'subtotal' => $subtotal,
+                'tax' => $tax,
+                'shipping_cost' => $shippingCost,
+                'items' => $cartItems,
+                'customer' => [
+                    'name' => $request->shipping_name,
+                    'email' => $request->shipping_email,
+                    'phone' => $request->shipping_phone,
+                ],
+                'shipping' => [
+                    'name' => $request->shipping_name,
+                    'email' => $request->shipping_email,
+                    'phone' => $request->shipping_phone,
+                    'address' => $request->shipping_address,
+                    'city' => $request->shipping_city,
+                    'province' => $request->shipping_province,
+                    'postal_code' => $request->shipping_postal_code,
+                ],
+                'billing' => !$request->same_as_shipping ? [
+                    'name' => $request->billing_name,
+                    'email' => $request->billing_email,
+                    'phone' => $request->billing_phone,
+                    'address' => $request->billing_address,
+                    'city' => $request->billing_city,
+                    'province' => $request->billing_province,
+                    'postal_code' => $request->billing_postal_code,
+                ] : [
+                    'name' => $request->shipping_name,
+                    'email' => $request->shipping_email,
+                    'phone' => $request->shipping_phone,
+                    'address' => $request->shipping_address,
+                    'city' => $request->shipping_city,
+                    'province' => $request->shipping_province,
+                    'postal_code' => $request->shipping_postal_code,
+                ],
                 'notes' => $request->notes,
+            ];
+
+            // Create Midtrans Snap Token
+            $snapToken = $this->midtransService->createSnapTokenFromData($orderData);
+
+            // Store order data in session for later use
+            session(['pending_order_data' => $orderData]);
+
+            return response()->json([
+                'success' => true,
+                'snap_token' => $snapToken,
+                'order_number' => $orderNumber
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 400);
+        }
+    }
+
+    // Handle successful payment and create order
+    public function handlePaymentSuccess(Request $request)
+    {
+        $request->validate([
+            'order_number' => 'required|string',
+            'transaction_id' => 'required|string',
+        ]);
+
+        try {
+            // Get order data from session
+            $orderData = session('pending_order_data');
+            if (!$orderData) {
+                throw new \Exception('Order data not found');
+            }
+
+            // Verify payment status with Midtrans
+            $transactionStatus = $this->midtransService->getTransactionStatus($request->transaction_id);
+            
+            $status = is_object($transactionStatus) ? $transactionStatus->transaction_status : $transactionStatus['transaction_status'];
+            
+            if (!in_array($status, ['capture', 'settlement'])) {
+                throw new \Exception('Payment not completed');
+            }
+
+            DB::beginTransaction();
+
+            // Get cart items again to ensure they still exist
+            $itemIds = $orderData['items']->pluck('id');
+            $cartItems = Cart::with('product')
+                ->whereIn('id', $itemIds)
+                ->where('user_id', Auth::id())
+                ->get();
+
+            if ($cartItems->isEmpty()) {
+                throw new \Exception('Cart items no longer available');
+            }
+
+            // Create real order number
+            $realOrderNumber = Order::generateOrderNumber();
+
+            // Create order
+            $order = Order::create([
+                'order_number' => $realOrderNumber,
+                'user_id' => Auth::id(),
+                'status' => 'processing',
+                'subtotal' => $orderData['subtotal'],
+                'tax' => $orderData['tax'],
+                'total' => $orderData['total'],
+                'total_amount' => $orderData['subtotal'],        
+                'shipping_cost' => $orderData['shipping_cost'],     
+                'grand_total' => $orderData['total'],       
+                'shipping_name' => $orderData['shipping']['name'],
+                'shipping_email' => $orderData['shipping']['email'],
+                'shipping_phone' => $orderData['shipping']['phone'],
+                'shipping_address' => $orderData['shipping']['address'],
+                'shipping_city' => $orderData['shipping']['city'],
+                'shipping_province' => $orderData['shipping']['province'],
+                'shipping_postal_code' => $orderData['shipping']['postal_code'],
+                'billing_name' => $orderData['billing']['name'],
+                'billing_email' => $orderData['billing']['email'],
+                'billing_phone' => $orderData['billing']['phone'],
+                'billing_address' => $orderData['billing']['address'],
+                'billing_city' => $orderData['billing']['city'],
+                'billing_province' => $orderData['billing']['province'],
+                'billing_postal_code' => $orderData['billing']['postal_code'],
+                'payment_method' => 'midtrans',
+                'payment_status' => 'paid',
+                'payment_type' => 'midtrans',
+                'transaction_id' => $request->transaction_id,
+                'notes' => $orderData['notes'],
                 'order_date' => now(),
             ]);
 
@@ -141,7 +263,7 @@ class CheckoutController extends Controller
                     'product_price' => $productPrice,
                     'kuantitas' => $item->kuantitas,
                     'size' => $item->size,
-                    'subtotal' => $productPrice * $item->kuantitas,  // Gunakan subtotal bukan total
+                    'subtotal' => $productPrice * $item->kuantitas,
                 ]);
 
                 // Update product stock
@@ -151,21 +273,30 @@ class CheckoutController extends Controller
             // Remove items from cart
             $cartItems->each->delete();
 
+            // Clear session data
+            session()->forget('pending_order_data');
+
             DB::commit();
 
-            return redirect()->route('checkout.success', ['order' => $order->order_number])
-                ->with('success', 'Order berhasil dibuat!');
+            return response()->json([
+                'success' => true,
+                'order_number' => $order->order_number,
+                'redirect_url' => route('orders.show', ['orderNumber' => $order->order_number])
+            ]);
 
         } catch (\Exception $e) {
             DB::rollback();
-            return back()->withErrors(['error' => $e->getMessage()])->withInput();
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 400);
         }
     }
 
     // Show order success page
     public function success($orderNumber)
     {
-        $order = Order::with('orderItems.product')  // Gunakan orderItems bukan items
+        $order = Order::with('orderItems.product')
             ->where('order_number', $orderNumber)
             ->where('user_id', Auth::id())
             ->firstOrFail();

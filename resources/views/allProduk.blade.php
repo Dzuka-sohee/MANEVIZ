@@ -1134,6 +1134,10 @@ use App\Models\Product;
                 image-rendering: -webkit-optimize-contrast;
             }
         }
+        .get a{
+            text-decoration: none;
+            color: white;
+        }
     </style>
 
     <div class="allproduk-container">
@@ -1146,8 +1150,8 @@ use App\Models\Product;
                 <h2 class="hero-subtitle">
                     Form Chaos To Cosmos
                 </h2>
-                <button class="btn-primary">
-                    Get Started
+                <button class="btn-primary get">
+                    <a href="#produk-display">Get Started</a>
                 </button>
             </div>
         </div>
@@ -1276,7 +1280,7 @@ use App\Models\Product;
 
         <!-- Our Collections Section -->
         <div class="section">
-            <div class="container">
+            <div class="container" id="produk-display">
                 <h3 class="section-title">Our Collections</h3>
 
                 <!-- Filter Buttons -->
@@ -1291,11 +1295,16 @@ use App\Models\Product;
                     @foreach ($products as $product)
                         <a href="{{ route('products.show', $product->slug) }}" class="product-card">
                             <div class="product-image">
-                                @if (optional($product->productImages)->isNotEmpty())
-                                    <img src="{{ asset('storage/' . $product->productImages->first()->image_path) }}"
+                                @if ($product->primaryImage)
+                                    <img src="{{ asset('storage/' . $product->primaryImage->image_path) }}"
+                                        alt="{{ $product->name }}">
+                                @elseif ($product->images->isNotEmpty())
+                                    <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
                                         alt="{{ $product->name }}">
                                 @else
-                                    <img src="{{ asset('images/no-image.png') }}" alt="No Image">
+                                    <img src="{{ asset('images/no-image.png') }}"
+                                        onerror="this.onerror=null;this.src='https://via.placeholder.com/300x300?text=No+Image';"
+                                        alt="No Image">
                                 @endif
                             </div>
                             <div class="product-info">

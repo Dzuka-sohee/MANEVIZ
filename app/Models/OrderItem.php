@@ -14,10 +14,11 @@ class OrderItem extends Model
         'product_id',
         'product_name',
         'product_price',
-        'kuantitas',
+        'kuantitas',   // ganti dari quantity ke kuantitas
         'size',
         'subtotal',
     ];
+
 
     // Relationships
     public function order()
@@ -28,5 +29,16 @@ class OrderItem extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
+
+    // Add this method to check if item can be reviewed
+    public function canBeReviewed()
+    {
+        return $this->order->status === 'delivered' && !$this->review;
     }
 }

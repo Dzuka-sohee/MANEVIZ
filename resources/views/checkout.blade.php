@@ -123,47 +123,6 @@
         cursor: pointer;
     }
 
-    .payment-methods {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-    }
-
-    .payment-method {
-        border: 2px solid #e9ecef;
-        border-radius: 12px;
-        padding: 15px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-align: center;
-        position: relative;
-    }
-
-    .payment-method:hover {
-        border-color: #333;
-    }
-
-    .payment-method.selected {
-        border-color: #333;
-        background-color: #f8f9fa;
-    }
-
-    .payment-method input[type="radio"] {
-        position: absolute;
-        opacity: 0;
-    }
-
-    .payment-icon {
-        font-size: 24px;
-        margin-bottom: 8px;
-    }
-
-    .payment-name {
-        font-weight: 600;
-        font-size: 14px;
-        color: #333;
-    }
-
     .order-summary {
         background: white;
         border-radius: 16px;
@@ -248,9 +207,9 @@
         color: #333;
     }
 
-    .place-order-btn {
+    .pay-now-btn {
         width: 100%;
-        background: #333;
+        background: linear-gradient(135deg, #007bff, #0056b3);
         color: white;
         border: none;
         padding: 16px;
@@ -261,17 +220,62 @@
         cursor: pointer;
         transition: all 0.3s ease;
         margin-top: 20px;
+        box-shadow: 0 4px 15px rgba(0,123,255,0.3);
     }
 
-    .place-order-btn:hover:not(:disabled) {
-        background: #555;
+    .pay-now-btn:hover:not(:disabled) {
         transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,123,255,0.4);
     }
 
-    .place-order-btn:disabled {
+    .pay-now-btn:disabled {
         background: #ccc;
         cursor: not-allowed;
         transform: none;
+        box-shadow: none;
+    }
+
+    .payment-info {
+        background: #e3f2fd;
+        border: 1px solid #bbdefb;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .payment-info h5 {
+        color: #1976d2;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    .payment-info p {
+        color: #424242;
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .payment-methods-preview {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 10px;
+        margin: 15px 0;
+    }
+
+    .payment-method-preview {
+        background: white;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        font-size: 12px;
+        color: #6c757d;
+    }
+
+    .payment-method-preview div {
+        font-size: 20px;
+        margin-bottom: 5px;
     }
 
     .error-message {
@@ -332,6 +336,49 @@
         to { transform: rotate(360deg); }
     }
 
+    /* Payment Modal */
+    .payment-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+    }
+
+    .payment-modal.show {
+        display: flex;
+    }
+
+    .payment-modal-content {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        max-width: 500px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .loading-content {
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #007bff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
         .checkout-content {
@@ -344,10 +391,6 @@
         }
 
         .form-row {
-            grid-template-columns: 1fr;
-        }
-
-        .payment-methods {
             grid-template-columns: 1fr;
         }
 
@@ -382,7 +425,7 @@
 <div class="container">
     <div class="checkout-header">
         <h1 class="checkout-title">Checkout</h1>
-        <p class="checkout-subtitle">Complete your order</p>
+        <p class="checkout-subtitle">Complete your order with secure payment</p>
     </div>
 
     <!-- Back to Cart Link -->
@@ -413,7 +456,7 @@
     <div class="checkout-content">
         <!-- Checkout Form -->
         <div class="checkout-form">
-            <form id="checkoutForm" action="{{ route('checkout.store') }}" method="POST">
+            <form id="checkoutForm">
                 @csrf
                 
                 <!-- Hidden field untuk items -->
@@ -426,66 +469,45 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Full Name *</label>
-                            <input type="text" name="shipping_name" class="form-input @error('shipping_name') is-invalid @enderror" 
+                            <input type="text" name="shipping_name" class="form-input" 
                                    value="{{ old('shipping_name', auth()->user()->name) }}" required>
-                            @error('shipping_name')
-                                <span class="error-message">{{ $message }}</span>
-                            @enderror
                         </div>
                         <div class="form-group">
                             <label class="form-label">Email *</label>
-                            <input type="email" name="shipping_email" class="form-input @error('shipping_email') is-invalid @enderror" 
+                            <input type="email" name="shipping_email" class="form-input" 
                                    value="{{ old('shipping_email', auth()->user()->email) }}" required>
-                            @error('shipping_email')
-                                <span class="error-message">{{ $message }}</span>
-                            @enderror
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Phone Number *</label>
-                        <input type="tel" name="shipping_phone" class="form-input @error('shipping_phone') is-invalid @enderror" 
+                        <input type="tel" name="shipping_phone" class="form-input" 
                                value="{{ old('shipping_phone') }}" required placeholder="08xxxxxxxxxx">
-                        @error('shipping_phone')
-                            <span class="error-message">{{ $message }}</span>
-                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Address *</label>
-                        <textarea name="shipping_address" class="form-input form-textarea @error('shipping_address') is-invalid @enderror" 
+                        <textarea name="shipping_address" class="form-input form-textarea" 
                                   required placeholder="Street address, building, apartment, etc.">{{ old('shipping_address') }}</textarea>
-                        @error('shipping_address')
-                            <span class="error-message">{{ $message }}</span>
-                        @enderror
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">City *</label>
-                            <input type="text" name="shipping_city" class="form-input @error('shipping_city') is-invalid @enderror" 
+                            <input type="text" name="shipping_city" class="form-input" 
                                    value="{{ old('shipping_city') }}" required>
-                            @error('shipping_city')
-                                <span class="error-message">{{ $message }}</span>
-                            @enderror
                         </div>
                         <div class="form-group">
                             <label class="form-label">Province *</label>
-                            <input type="text" name="shipping_province" class="form-input @error('shipping_province') is-invalid @enderror" 
+                            <input type="text" name="shipping_province" class="form-input" 
                                    value="{{ old('shipping_province') }}" required>
-                            @error('shipping_province')
-                                <span class="error-message">{{ $message }}</span>
-                            @enderror
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Postal Code *</label>
-                        <input type="text" name="shipping_postal_code" class="form-input @error('shipping_postal_code') is-invalid @enderror" 
+                        <input type="text" name="shipping_postal_code" class="form-input" 
                                value="{{ old('shipping_postal_code') }}" required maxlength="10">
-                        @error('shipping_postal_code')
-                            <span class="error-message">{{ $message }}</span>
-                        @enderror
                     </div>
                 </div>
 
@@ -503,116 +525,54 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">Full Name</label>
-                                <input type="text" name="billing_name" class="form-input @error('billing_name') is-invalid @enderror" 
+                                <input type="text" name="billing_name" class="form-input" 
                                        value="{{ old('billing_name') }}">
-                                @error('billing_name')
-                                    <span class="error-message">{{ $message }}</span>
-                                @enderror
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Email</label>
-                                <input type="email" name="billing_email" class="form-input @error('billing_email') is-invalid @enderror" 
+                                <input type="email" name="billing_email" class="form-input" 
                                        value="{{ old('billing_email') }}">
-                                @error('billing_email')
-                                    <span class="error-message">{{ $message }}</span>
-                                @enderror
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">Phone Number</label>
-                            <input type="tel" name="billing_phone" class="form-input @error('billing_phone') is-invalid @enderror" 
+                            <input type="tel" name="billing_phone" class="form-input" 
                                    value="{{ old('billing_phone') }}">
-                            @error('billing_phone')
-                                <span class="error-message">{{ $message }}</span>
-                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">Address</label>
-                            <textarea name="billing_address" class="form-input form-textarea @error('billing_address') is-invalid @enderror">{{ old('billing_address') }}</textarea>
-                            @error('billing_address')
-                                <span class="error-message">{{ $message }}</span>
-                            @enderror
+                            <textarea name="billing_address" class="form-input form-textarea">{{ old('billing_address') }}</textarea>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">City</label>
-                                <input type="text" name="billing_city" class="form-input @error('billing_city') is-invalid @enderror" 
+                                <input type="text" name="billing_city" class="form-input" 
                                        value="{{ old('billing_city') }}">
-                                @error('billing_city')
-                                    <span class="error-message">{{ $message }}</span>
-                                @enderror
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Province</label>
-                                <input type="text" name="billing_province" class="form-input @error('billing_province') is-invalid @enderror" 
+                                <input type="text" name="billing_province" class="form-input" 
                                        value="{{ old('billing_province') }}">
-                                @error('billing_province')
-                                    <span class="error-message">{{ $message }}</span>
-                                @enderror
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label">Postal Code</label>
-                            <input type="text" name="billing_postal_code" class="form-input @error('billing_postal_code') is-invalid @enderror" 
+                            <input type="text" name="billing_postal_code" class="form-input" 
                                    value="{{ old('billing_postal_code') }}" maxlength="10">
-                            @error('billing_postal_code')
-                                <span class="error-message">{{ $message }}</span>
-                            @enderror
                         </div>
                     </div>
-                </div>
-
-                <!-- Payment Method -->
-                <div class="form-section">
-                    <h3 class="section-title">Payment Method</h3>
-                    
-                    <div class="payment-methods">
-                        <label class="payment-method {{ old('payment_method', 'bank_transfer') == 'bank_transfer' ? 'selected' : '' }}">
-                            <input type="radio" name="payment_method" value="bank_transfer" 
-                                   {{ old('payment_method', 'bank_transfer') == 'bank_transfer' ? 'checked' : '' }}>
-                            <div class="payment-icon">🏦</div>
-                            <div class="payment-name">Bank Transfer</div>
-                        </label>
-                        
-                        <label class="payment-method {{ old('payment_method') == 'credit_card' ? 'selected' : '' }}">
-                            <input type="radio" name="payment_method" value="credit_card" 
-                                   {{ old('payment_method') == 'credit_card' ? 'checked' : '' }}>
-                            <div class="payment-icon">💳</div>
-                            <div class="payment-name">Credit Card</div>
-                        </label>
-                        
-                        <label class="payment-method {{ old('payment_method') == 'ewallet' ? 'selected' : '' }}">
-                            <input type="radio" name="payment_method" value="ewallet" 
-                                   {{ old('payment_method') == 'ewallet' ? 'checked' : '' }}>
-                            <div class="payment-icon">📱</div>
-                            <div class="payment-name">E-Wallet</div>
-                        </label>
-                        
-                        <label class="payment-method {{ old('payment_method') == 'cod' ? 'selected' : '' }}">
-                            <input type="radio" name="payment_method" value="cod" 
-                                   {{ old('payment_method') == 'cod' ? 'checked' : '' }}>
-                            <div class="payment-icon">💵</div>
-                            <div class="payment-name">Cash on Delivery</div>
-                        </label>
-                    </div>
-                    @error('payment_method')
-                        <span class="error-message">{{ $message }}</span>
-                    @enderror
                 </div>
 
                 <!-- Order Notes -->
                 <div class="form-section">
                     <h3 class="section-title">Order Notes (Optional)</h3>
                     <div class="form-group">
-                        <textarea name="notes" class="form-input form-textarea @error('notes') is-invalid @enderror" 
+                        <textarea name="notes" class="form-input form-textarea" 
                                   placeholder="Any special instructions for your order...">{{ old('notes') }}</textarea>
-                        @error('notes')
-                            <span class="error-message">{{ $message }}</span>
-                        @enderror
                     </div>
                 </div>
             </form>
@@ -668,12 +628,53 @@
                 <span>IDR {{ number_format($total, 0, ',', '.') }}</span>
             </div>
 
-            <button type="submit" form="checkoutForm" class="place-order-btn" id="placeOrderBtn">
-                <span class="btn-text">Place Order</span>
+            <!-- Payment Info -->
+            <div class="payment-info">
+                <h5>Secure Payment</h5>
+                <p>Choose from various payment methods including bank transfer, credit card, e-wallets, and more.</p>
+                <div class="payment-methods-preview">
+                    <div class="payment-method-preview">
+                        <div>🏦</div>
+                        <span>Bank</span>
+                    </div>
+                    <div class="payment-method-preview">
+                        <div>💳</div>
+                        <span>Card</span>
+                    </div>
+                    <div class="payment-method-preview">
+                        <div>📱</div>
+                        <span>E-Wallet</span>
+                    </div>
+                    <div class="payment-method-preview">
+                        <div>📊</div>
+                        <span>QRIS</span>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" id="payNowBtn" class="pay-now-btn">
+                <span class="btn-text">Pay Now - IDR {{ number_format($total, 0, ',', '.') }}</span>
             </button>
         </div>
     </div>
 </div>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="payment-modal">
+    <div class="payment-modal-content">
+        <div id="loadingContent" class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>Preparing Payment...</h3>
+            <p>Please wait while we set up your secure payment.</p>
+        </div>
+        <div id="paymentContent" style="display: none;">
+            <!-- Midtrans Snap will load here -->
+        </div>
+    </div>
+</div>
+
+<!-- Midtrans Snap JS -->
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
 
 <script>
     function toggleBillingFields() {
@@ -682,46 +683,111 @@
         
         if (checkbox.checked) {
             billingFields.style.display = 'none';
-            // Clear billing fields
             billingFields.querySelectorAll('input, textarea').forEach(input => {
                 input.removeAttribute('required');
             });
         } else {
             billingFields.style.display = 'block';
-            // Make billing fields required
             billingFields.querySelectorAll('input[name$="_name"], input[name$="_email"], input[name$="_phone"], textarea[name$="_address"], input[name$="_city"], input[name$="_province"], input[name$="_postal_code"]').forEach(input => {
                 input.setAttribute('required', 'required');
             });
         }
     }
 
-    // Payment method selection
-    document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
-        radio.addEventListener('change', function() {
-            document.querySelectorAll('.payment-method').forEach(method => {
-                method.classList.remove('selected');
-            });
-            this.closest('.payment-method').classList.add('selected');
+    // Payment button click handler
+    document.getElementById('payNowBtn').addEventListener('click', function() {
+        // Validate form first
+        const form = document.getElementById('checkoutForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        // Show modal and loading
+        const modal = document.getElementById('paymentModal');
+        modal.classList.add('show');
+        
+        // Prepare form data
+        const formData = new FormData(form);
+        
+        // Create payment token
+        fetch('{{ route("checkout.create-payment") }}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Hide loading and show payment
+                document.getElementById('loadingContent').style.display = 'none';
+                document.getElementById('paymentContent').style.display = 'block';
+                
+                // Trigger Midtrans Snap
+                snap.pay(data.snap_token, {
+                    onSuccess: function(result) {
+                        // Handle successful payment
+                        handlePaymentSuccess(result, data.order_number);
+                    },
+                    onPending: function(result) {
+                        // Handle pending payment
+                        showNotification('info', 'Payment is being processed...');
+                        modal.classList.remove('show');
+                    },
+                    onError: function(result) {
+                        // Handle payment error
+                        showNotification('error', 'Payment failed. Please try again.');
+                        modal.classList.remove('show');
+                    },
+                    onClose: function() {
+                        // Handle when user closes payment popup
+                        modal.classList.remove('show');
+                    }
+                });
+            } else {
+                // Handle error
+                showNotification('error', data.message || 'Failed to create payment. Please try again.');
+                modal.classList.remove('show');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('error', 'An error occurred. Please try again.');
+            modal.classList.remove('show');
         });
     });
 
-    // Form submission
-    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-        const submitBtn = document.getElementById('placeOrderBtn');
-        const btnText = submitBtn.querySelector('.btn-text');
-        
-        // Disable button and show loading
-        submitBtn.disabled = true;
-        btnText.innerHTML = '<span class="spinner"></span>Processing Order...';
-        
-        // Re-enable button after 15 seconds to prevent permanent lock
-        setTimeout(() => {
-            if (submitBtn.disabled) {
-                submitBtn.disabled = false;
-                btnText.textContent = 'Place Order';
+    // Handle successful payment
+    function handlePaymentSuccess(result, orderNumber) {
+        fetch('{{ route("checkout.handle-payment") }}', {
+            method: 'POST',
+            body: JSON.stringify({
+                order_number: orderNumber,
+                transaction_id: result.transaction_id
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             }
-        }, 15000);
-    });
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('success', 'Payment successful! Redirecting...');
+                setTimeout(() => {
+                    window.location.href = data.redirect_url;
+                }, 2000);
+            } else {
+                showNotification('error', data.message || 'Failed to process payment. Please contact support.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showNotification('error', 'An error occurred. Please contact support.');
+        });
+    }
 
     // Show notification function
     function showNotification(type, message) {
@@ -733,13 +799,14 @@
             padding: 15px 20px;
             border-radius: 8px;
             color: white;
-            z-index: 10000;
+            z-index: 10001;
             font-weight: 500;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             transform: translateX(400px);
             transition: transform 0.3s ease;
             max-width: 350px;
-            ${type === 'success' ? 'background: #28a745;' : 'background: #dc3545;'}
+            ${type === 'success' ? 'background: #28a745;' : 
+              type === 'info' ? 'background: #17a2b8;' : 'background: #dc3545;'}
         `;
         notification.textContent = message;
         document.body.appendChild(notification);
@@ -755,6 +822,18 @@
         }, 4000);
     }
 
+    // Close modal when clicking outside
+    document.getElementById('paymentModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.remove('show');
+        }
+    });
+
+    // Initialize billing fields visibility on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleBillingFields();
+    });
+
     // Show server-side messages
     @if(session('success'))
         showNotification('success', '{{ session('success') }}');
@@ -763,10 +842,5 @@
     @if(session('error'))
         showNotification('error', '{{ session('error') }}');
     @endif
-
-    // Initialize billing fields visibility on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        toggleBillingFields();
-    });
 </script>
 @endsection

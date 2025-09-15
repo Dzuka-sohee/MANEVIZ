@@ -55,15 +55,45 @@ class ProductController extends Controller
         return view('allProduk', compact('products', 'categories'));
     }
 
+    // 🔥 FIXED METHOD - Dynamic star rating calculation
     public function show($slug)
     {
-        // 🔑 Pakai firstOrFail biar hasil tunggal, bukan array
+        // Get product with images and reviews
         $product = Product::active()
-            ->with(['category', 'images'])
+            ->with(['category', 'images', 'reviews.user'])
             ->where('slug', $slug)
             ->firstOrFail();
 
-        // Produk terkait
+        // Get reviews with pagination
+        $reviews = $product->reviews()
+            ->verified()
+            ->with(['user', 'orderItem.order'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        // 🔥 FIXED: Calculate review statistics properly
+        $totalReviews = $product->reviews()->count();
+        $averageRating = $totalReviews > 0 ? $product->reviews()->avg('rating') : 0;
+        
+        // Calculate rating distribution (1-5 stars)
+        $ratingDistribution = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $ratingDistribution[$i] = $product->reviews()->where('rating', $i)->count();
+        }
+
+        // Calculate recommendation percentage
+        $recommendationPercentage = $totalReviews > 0 
+            ? ($product->reviews()->where('is_recommended', true)->count() / $totalReviews) * 100 
+            : 0;
+
+        $reviewStats = [
+            'average_rating' => round($averageRating, 1), // Round to 1 decimal
+            'total_reviews' => $totalReviews,
+            'rating_distribution' => $ratingDistribution,
+            'recommendation_percentage' => round($recommendationPercentage, 1)
+        ];
+
+        // Related products
         $relatedProducts = Product::active()
             ->where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
@@ -72,7 +102,7 @@ class ProductController extends Controller
             ->limit(4)
             ->get();
 
-        return view('detailproduk', compact('product', 'relatedProducts'));
+        return view('detailproduk', compact('product', 'relatedProducts', 'reviews', 'reviewStats'));
     }
 
     public function featured()

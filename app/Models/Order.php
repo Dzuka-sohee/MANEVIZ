@@ -13,14 +13,17 @@ class Order extends Model
         'user_id',
         'order_number',
         'status',
-        'subtotal',          // Diperlukan - dari database
-        'tax',               // Kemungkinan ada
-        'total',             // Kemungkinan ada
-        'total_amount',      // Kolom existing
+        'subtotal',
+        'tax',
+        'total',
+        'total_amount',
         'shipping_cost',
         'grand_total',
         'payment_method',
         'payment_status',
+        'transaction_id',      // Midtrans transaction ID
+        'snap_token',         // Midtrans snap token
+        'payment_type',       // Payment type (midtrans, cod, etc)
         'shipping_name',
         'shipping_phone',
         'shipping_email',
@@ -30,7 +33,7 @@ class Order extends Model
         'shipping_postal_code',
         'billing_name',
         'billing_phone',
-        'billing_email', 
+        'billing_email',
         'billing_address',
         'billing_city',
         'billing_province',
@@ -47,27 +50,26 @@ class Order extends Model
         'delivered_date' => 'datetime',
     ];
 
-    // TAMBAHKAN METHOD INI
     public static function generateOrderNumber()
     {
         $prefix = 'ORD';
         $date = now()->format('Ymd');
-        
+
         // Cari order terakhir hari ini
         $lastOrder = self::where('order_number', 'like', $prefix . $date . '%')
-                        ->orderBy('order_number', 'desc')
-                        ->first();
-        
+            ->orderBy('order_number', 'desc')
+            ->first();
+
         if ($lastOrder) {
-            // Ambil 4 digit terakhir dan tambah 1
-            $lastNumber = intval(substr($lastOrder->order_number, -4));
+            // Ambil 3 digit terakhir dan tambah 1
+            $lastNumber = intval(substr($lastOrder->order_number, -3));
             $newNumber = $lastNumber + 1;
         } else {
             // Jika belum ada order hari ini, mulai dari 1
             $newNumber = 1;
         }
-        
-        // Format: ORD20250908001, ORD20250908002, dst.
+
+        // Format: ORD20250911001, ORD20250911002, dst.
         return $prefix . $date . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
     }
 
@@ -82,7 +84,7 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    // Tambahkan relasi items juga (yang dipanggil di controller)
+    // Alias untuk items (compatibility)
     public function items()
     {
         return $this->hasMany(OrderItem::class);
@@ -117,7 +119,7 @@ class Order extends Model
     {
         $labels = [
             'bank_transfer' => 'Transfer Bank',
-            'credit_card' => 'Kartu Kredit',   // Tambahkan ini
+            'credit_card' => 'Kartu Kredit',
             'ewallet' => 'E-Wallet',
             'cod' => 'Cash on Delivery (COD)',
         ];
@@ -134,5 +136,28 @@ class Order extends Model
     public function scopePaid($query)
     {
         return $query->where('payment_status', 'paid');
+    }
+
+    // Helper methods for Midtrans
+    public function isMidtransPayment()
+    {
+        return in_array($this->payment_method, ['bank_transfer', 'credit_card', 'ewallet']) && $this->payment_type === 'midtrans';
+    }
+
+    public function needsPayment()
+    {
+        return $this->payment_status === 'pending' && $this->payment_method !== 'cod';
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    // Check if order has any unreviewed items
+    public function hasUnreviewedItems()
+    {
+        return $this->status === 'delivered' &&
+            $this->orderItems()->whereDoesntHave('review')->exists();
     }
 }
